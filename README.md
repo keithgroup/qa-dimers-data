@@ -1,6 +1,6 @@
 # Quantum alchemy data - Dimers
 
-All PySCF calculation logs and JSON files for the atom study of quantum alchemy/APDFT.
+All PySCF calculation logs and JSON files for the dimer study of quantum alchemy/APDFT.
 A cumulative JSON file is provided with all files organized by atom and state (i.e., charge and multiplicity).
 
 ## Data generation
@@ -20,7 +20,7 @@ JSONs contain the following information.
     - `"geometry"`: Cartesian coordinates of all atoms in the system.
     - `"symbols"`: All chemical symbols in the system in the same order as in the `"geometry"`.
 - `"molecular_charge"`: Total system charge.
-- `"molecular_multiplicity"`: Multiplicity of the system, $2S + 1$.
+- `"molecular_multiplicity"`: Multiplicity of the system, 2S + 1.
 - `"name"`: Unique name specifying the calculation.
 - `"atomic_numbers"`: List of atomic numbers of all atoms in the system in the same order as `"geometry"`.
 - `"n_electrons"`: Total number of electrons in the system.
@@ -36,14 +36,14 @@ JSONs contain the following information.
 - `"finite_diff_acc"`: General accuracy for central finite difference.
 - `"apdft_lambdas"`: List of all calculations and their change in nuclear charge.
 - `"electronic_energies"`: Total electronic energies of the systems.
-- `"apdft_energies"`: Predicted total electron energies with a Taylor series of $n$th order.
+- `"apdft_energies"`: Predicted total electron energies with a Taylor series of nth order.
 - `"apdft_poly_coeff"`: Taylor series polynomial coefficients (derivatives are from finite differences).
 - `"hf_energies"`: Hartree&ndash;Fock energy contributions (if we are using coupled cluster).
 - `"triples_corrections"`: Perturbative triple corrections (if selected).
 - `"scf_converged"`: If the SCF iterations have converged.
 - `"cc_converged"`: If the coupled cluster iterations have converged.
-- `"scf_spin_squared"`: Spin squared expectation value of the last SCF iteration, $S(S + 1)$.
-- `"cc_spin_squared"`: Spin squared expectation value of the last coupled cluster iteration, $S(S + 1)$.
+- `"scf_spin_squared"`: Spin squared expectation value of the last SCF iteration, S(S + 1).
+- `"cc_spin_squared"`: Spin squared expectation value of the last coupled cluster iteration, S(S + 1).
 - `"t1_diagnostic"`: T1 diagnostic for coupled cluster calculations.
 
 <details>
