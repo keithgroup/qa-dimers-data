@@ -1,0 +1,63 @@
+-=#  geomeTRIC started. Version: 0.9.7.2  #=-
+geometric-optimize called with the following command line:
+apdft-pyscf-calc.py
+6 internal coordinates being used (instead of 6 Cartesians)
+Internal coordinate system (atoms numbered from 1):
+Distance 1-2
+Translation-X 1-2
+Translation-Y 1-2
+Translation-Z 1-2
+Rotation-A 1-2
+Rotation-B 1-2
+Rotation-C 1-2
+<class 'geometric.internal.Distance'> : 1
+<class 'geometric.internal.TranslationX'> : 1
+<class 'geometric.internal.TranslationY'> : 1
+<class 'geometric.internal.TranslationZ'> : 1
+<class 'geometric.internal.RotationA'> : 1
+<class 'geometric.internal.RotationB'> : 1
+<class 'geometric.internal.RotationC'> : 1
+WARN: beta  nocc = 4  HOMO -0.813743815695117 >= LUMO -0.813743815695108
+WARN: system HOMO 0.0172792606190494 >= system LUMO -0.813743815695108
+WARN: system HOMO -0.324506201813046 >= system LUMO -1.14897873577988
+WARN: system HOMO -0.215278567398908 >= system LUMO -0.755147268335273
+WARN: system HOMO -0.183705375690051 >= system LUMO -0.704732947372571
+Step    0 : Gradient = 3.847e-01/3.847e-01 (rms/max) Energy = -128.3656527910
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 4.76883e-01
+Step    1 : Displace = 1.000e-01/1.000e-01 (rms/max) Trust = 1.000e-01 (=) Grad = 2.152e-01/2.152e-01 (rms/max) E (change) = -128.4760936702 (-1.104e-01) Quality = 0.992
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 4.48411e-01
+Step    2 : Displace = 1.270e-01/1.270e-01 (rms/max) Trust = 1.414e-01 (+) Grad = 1.009e-01/1.009e-01 (rms/max) E (change) = -128.5486795061 (-7.259e-02) Quality = 1.405
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 2.38186e-01
+Step    3 : Displace = 1.121e-01/1.121e-01 (rms/max) Trust = 2.000e-01 (+) Grad = 5.007e-02/5.007e-02 (rms/max) E (change) = -128.5795068121 (-3.083e-02) Quality = 1.443
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 1.19995e-01
+Step    4 : Displace = 1.104e-01/1.104e-01 (rms/max) Trust = 2.828e-01 (+) Grad = 2.389e-02/2.389e-02 (rms/max) E (change) = -128.5943436566 (-1.484e-02) Quality = 1.420
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 6.27382e-02
+Step    5 : Displace = 1.008e-01/1.008e-01 (rms/max) Trust = 3.000e-01 (+) Grad = 1.133e-02/1.133e-02 (rms/max) E (change) = -128.6008013542 (-6.458e-03) Quality = 1.420
+Hessian Eigenvalues: 3.29759e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    6 : Displace = 9.093e-02/9.093e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 5.201e-03/5.201e-03 (rms/max) E (change) = -128.6035384116 (-2.737e-03) Quality = 1.405
+Hessian Eigenvalues: 1.78413e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    7 : Displace = 7.714e-02/7.714e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 2.265e-03/2.265e-03 (rms/max) E (change) = -128.6045884018 (-1.050e-03) Quality = 1.385
+Hessian Eigenvalues: 1.00712e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    8 : Displace = 5.951e-02/5.951e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 8.959e-04/8.959e-04 (rms/max) E (change) = -128.6049322684 (-3.439e-04) Quality = 1.350
+Hessian Eigenvalues: 6.08793e-03 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    9 : Displace = 3.894e-02/3.894e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 2.938e-04/2.938e-04 (rms/max) E (change) = -128.6050173521 (-8.508e-05) Quality = 1.291
+Hessian Eigenvalues: 4.09168e-03 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step   10 : Displace = 1.900e-02/1.900e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 6.566e-05/6.566e-05 (rms/max) E (change) = -128.6050300548 (-1.270e-05) Quality = 1.204
+Hessian Eigenvalues: 3.17723e-03 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step   11 : Displace = 5.468e-03/5.468e-03 (rms/max) Trust = 3.000e-01 (=) Grad = 6.933e-06/6.933e-06 (rms/max) E (change) = -128.6050308475 (-7.927e-07) Quality = 1.169
+Hessian Eigenvalues: 2.84172e-03 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step   12 : Displace = 6.456e-04/6.456e-04 (rms/max) Trust = 3.000e-01 (=) Grad = 1.926e-07/1.926e-07 (rms/max) E (change) = -128.6050308395 (+7.995e-09) Quality = -0.945
+Converged! =D
+
+    #==========================================================================#
+    #| If this code has benefited your research, please support us by citing: |#
+    #|                                                                        |#
+    #| Wang, L.-P.; Song, C.C. (2016) "Geometry optimization made simple with |#
+    #| translation and rotation coordinates", J. Chem, Phys. 144, 214108.     |#
+    #| http://dx.doi.org/10.1063/1.4952956                                    |#
+    #==========================================================================#
+    
+Time elapsed since start of run_optimizer: 1929.761 seconds
+output file: /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/ne.h/ne.h.chrg1.mult3/ne.h.chrg1.mult3.geomopt/ne.h.chrg1.mult3.sep1.0-pyscf.apdft-ccsdt.ccpv5z/ne.h.chrg1.mult3-pyscf-ccsdt.ccpv5z.log
+Optimized bond length = 2.6837020344256173 A
+

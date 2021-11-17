@@ -1,0 +1,1110 @@
+{
+    "n.h": {
+        "n.h.chrg1.mult4": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.0872219337151392, 0.0, 0.0 ]
+                ],
+                "symbols": [ "N", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 4,
+            "name": "n.h.chrg1.mult4.sep1.40-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 7, 1 ],
+            "n_electrons": 7,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "n.h.chrg0.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.0319252031619215, 0.0, 0.0 ]
+                ],
+                "symbols": [ "N", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 3,
+            "name": "n.h.chrg0.mult3.sep1.80-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 7, 1 ],
+            "n_electrons": 8,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "n.h.chrg0.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.0294494095437192, 0.0, 0.0 ]
+                ],
+                "symbols": [ "N", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 1,
+            "name": "n.h.chrg0.mult1.sep0.70-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 7, 1 ],
+            "n_electrons": 8,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "n.h.chrg-1.mult2": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.0346976985596867, 0.0, 0.0 ]
+                ],
+                "symbols": [ "N", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 2,
+            "name": "n.h.chrg-1.mult2.sep1.00-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 7, 1 ],
+            "n_electrons": 9,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "n.h.chrg1.mult2": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.0652529871657306, 0.0, 0.0 ]
+                ],
+                "symbols": [ "N", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 2,
+            "name": "n.h.chrg1.mult2.sep1.60-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 7, 1 ],
+            "n_electrons": 7,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "n.h.chrg-1.mult4": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.0774831930637552, 0.0, 0.0 ]
+                ],
+                "symbols": [ "N", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 4,
+            "name": "n.h.chrg-1.mult4.sep1.50-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 7, 1 ],
+            "n_electrons": 9,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        }
+    },
+    "o.h": {
+        "o.h.chrg1.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.0226549307046358, 0.0, 0.0 ]
+                ],
+                "symbols": [ "O", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 1,
+            "name": "o.h.chrg1.mult1.sep1.50-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 8, 1 ],
+            "n_electrons": 8,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "o.h.chrg0.mult2": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 0.9654279156402296, 0.0, 0.0 ]
+                ],
+                "symbols": [ "O", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 2,
+            "name": "o.h.chrg0.mult2.sep0.60-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 8, 1 ],
+            "n_electrons": 9,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "o.h.chrg-1.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.0291771018915399, 0.0, 0.0 ]
+                ],
+                "symbols": [ "O", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 3,
+            "name": "o.h.chrg-1.mult3.sep1.80-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 8, 1 ],
+            "n_electrons": 10,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "o.h.chrg1.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.0240368067940762, 0.0, 0.0 ]
+                ],
+                "symbols": [ "O", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 3,
+            "name": "o.h.chrg1.mult3.sep1.50-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 8, 1 ],
+            "n_electrons": 8,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "o.h.chrg-1.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 0.9575894631401823, 0.0, 0.0 ]
+                ],
+                "symbols": [ "O", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 1,
+            "name": "o.h.chrg-1.mult1.sep0.80-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 8, 1 ],
+            "n_electrons": 10,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        }
+    },
+    "be.h": {
+        "be.h.chrg0.mult4": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 3.8992980678573828, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Be", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 4,
+            "name": "be.h.chrg0.mult4.sep0.80-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 4, 1 ],
+            "n_electrons": 5,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "be.h.chrg1.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.3043493785755604, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Be", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 1,
+            "name": "be.h.chrg1.mult1.sep1.40-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 4, 1 ],
+            "n_electrons": 4,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "be.h.chrg-1.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.4127878262666194, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Be", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 1,
+            "name": "be.h.chrg-1.mult1.sep1.90-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 4, 1 ],
+            "n_electrons": 6,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "be.h.chrg0.mult2": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.3320458089148535, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Be", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 2,
+            "name": "be.h.chrg0.mult2.sep1.90-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 4, 1 ],
+            "n_electrons": 5,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "be.h.chrg1.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 2.794812587356862, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Be", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 3,
+            "name": "be.h.chrg1.mult3.sep1.50-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 4, 1 ],
+            "n_electrons": 4,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "be.h.chrg-1.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.3572458415072761, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Be", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 3,
+            "name": "be.h.chrg-1.mult3.sep1.30-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 4, 1 ],
+            "n_electrons": 6,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        }
+    },
+    "li.h": {
+        "li.h.chrg0.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 6.2689586530811585, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Li", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 3,
+            "name": "li.h.chrg0.mult3.sep0.60-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 3, 1 ],
+            "n_electrons": 4,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "li.h.chrg0.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.5895872949866114, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Li", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 1,
+            "name": "li.h.chrg0.mult1.sep1.40-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 3, 1 ],
+            "n_electrons": 4,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "li.h.chrg-1.mult4": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 5.60684572462511, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Li", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 4,
+            "name": "li.h.chrg-1.mult4.sep1.40-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 3, 1 ],
+            "n_electrons": 5,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "li.h.chrg-1.mult2": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.682872703034685, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Li", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 2,
+            "name": "li.h.chrg-1.mult2.sep1.90-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 3, 1 ],
+            "n_electrons": 5,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        }
+    },
+    "c.h": {
+        "c.h.chrg-1.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.1254858736032656, 0.0, 0.0 ]
+                ],
+                "symbols": [ "C", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 1,
+            "name": "c.h.chrg-1.mult1.sep1.60-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 6, 1 ],
+            "n_electrons": 8,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "c.h.chrg1.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.1235737646565955, 0.0, 0.0 ]
+                ],
+                "symbols": [ "C", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 1,
+            "name": "c.h.chrg1.mult1.sep1.30-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 6, 1 ],
+            "n_electrons": 6,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "c.h.chrg0.mult2": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.1127841787221682, 0.0, 0.0 ]
+                ],
+                "symbols": [ "C", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 2,
+            "name": "c.h.chrg0.mult2.sep1.90-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 6, 1 ],
+            "n_electrons": 7,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "c.h.chrg1.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.1270102468663101, 0.0, 0.0 ]
+                ],
+                "symbols": [ "C", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 3,
+            "name": "c.h.chrg1.mult3.sep1.10-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 6, 1 ],
+            "n_electrons": 6,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "c.h.chrg-1.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.1295399504586914, 0.0, 0.0 ]
+                ],
+                "symbols": [ "C", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 3,
+            "name": "c.h.chrg-1.mult3.sep1.00-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 6, 1 ],
+            "n_electrons": 8,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "c.h.chrg0.mult4": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.082292793350291, 0.0, 0.0 ]
+                ],
+                "symbols": [ "C", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 4,
+            "name": "c.h.chrg0.mult4.sep1.00-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 6, 1 ],
+            "n_electrons": 7,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        }
+    },
+    "b.h": {
+        "b.h.chrg-1.mult2": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.2466343496584111, 0.0, 0.0 ]
+                ],
+                "symbols": [ "B", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 2,
+            "name": "b.h.chrg-1.mult2.sep0.70-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 5, 1 ],
+            "n_electrons": 7,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "b.h.chrg1.mult2": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.1939768190007893, 0.0, 0.0 ]
+                ],
+                "symbols": [ "B", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 2,
+            "name": "b.h.chrg1.mult2.sep1.80-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 5, 1 ],
+            "n_electrons": 5,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "b.h.chrg0.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.1814350731818122, 0.0, 0.0 ]
+                ],
+                "symbols": [ "B", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 3,
+            "name": "b.h.chrg0.mult3.sep1.90-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 5, 1 ],
+            "n_electrons": 6,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "b.h.chrg1.mult4": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.7158960079618844, 0.0, 0.0 ]
+                ],
+                "symbols": [ "B", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 4,
+            "name": "b.h.chrg1.mult4.sep1.90-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 5, 1 ],
+            "n_electrons": 5,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "b.h.chrg-1.mult4": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.1936205152448724, 0.0, 0.0 ]
+                ],
+                "symbols": [ "B", "H" ]
+            },
+            "molecular_charge": -1,
+            "molecular_multiplicity": 4,
+            "name": "b.h.chrg-1.mult4.sep1.20-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 5, 1 ],
+            "n_electrons": 7,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "b.h.chrg0.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 1.2209421660619573, 0.0, 0.0 ]
+                ],
+                "symbols": [ "B", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 1,
+            "name": "b.h.chrg0.mult1.sep0.90-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 5, 1 ],
+            "n_electrons": 6,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        }
+    },
+    "ne.h": {
+        "ne.h.chrg1.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 2.6837020344256173, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Ne", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 3,
+            "name": "ne.h.chrg1.mult3.sep0.90-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 10, 1 ],
+            "n_electrons": 10,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "ne.h.chrg1.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 0.9863909432832086, 0.0, 0.0 ]
+                ],
+                "symbols": [ "Ne", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 1,
+            "name": "ne.h.chrg1.mult1.sep0.80-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 10, 1 ],
+            "n_electrons": 10,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        }
+    },
+    "f.h": {
+        "f.h.chrg0.mult1": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 0.9126675946008574, 0.0, 0.0 ]
+                ],
+                "symbols": [ "F", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 1,
+            "name": "f.h.chrg0.mult1.sep1.70-pyscf-ccsdt.ccpv5z",
+            "atomic_numbers": [ 9, 1 ],
+            "n_electrons": 10,
+            "model": {
+                "method": "CCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "f.h.chrg1.mult2": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 0.9968012749059382, 0.0, 0.0 ]
+                ],
+                "symbols": [ "F", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 2,
+            "name": "f.h.chrg1.mult2.sep1.80-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 9, 1 ],
+            "n_electrons": 9,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "f.h.chrg1.mult4": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 2.8102198523506834, 0.0, 0.0 ]
+                ],
+                "symbols": [ "F", "H" ]
+            },
+            "molecular_charge": 1,
+            "molecular_multiplicity": 4,
+            "name": "f.h.chrg1.mult4.sep1.50-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 9, 1 ],
+            "n_electrons": 9,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        },
+        "f.h.chrg0.mult3": {
+            "schema_name": "pyscf_apdft_output",
+            "provenance": {
+                "creator": "PySCF",
+                "version": "1.7.6"
+            },
+            "molecule": {
+                "geometry": [
+                    [ 0.0, 0.0, 0.0 ],
+                    [ 3.6328119467086886, 0.0, 0.0 ]
+                ],
+                "symbols": [ "F", "H" ]
+            },
+            "molecular_charge": 0,
+            "molecular_multiplicity": 3,
+            "name": "f.h.chrg0.mult3.sep1.70-pyscf-uccsdt.ccpv5z",
+            "atomic_numbers": [ 9, 1 ],
+            "n_electrons": 10,
+            "model": {
+                "method": "UCCSD(T)",
+                "basis": "cc-pV5Z",
+                "scf_conv_tol": 1e-09,
+                "scf_conv_tol_grad": 1e-06,
+                "cc_conv_tol": 1e-05,
+                "cc_conv_tol_normt": 1e-07
+            },
+            "broken_symmetry": false
+        }
+    }
+}

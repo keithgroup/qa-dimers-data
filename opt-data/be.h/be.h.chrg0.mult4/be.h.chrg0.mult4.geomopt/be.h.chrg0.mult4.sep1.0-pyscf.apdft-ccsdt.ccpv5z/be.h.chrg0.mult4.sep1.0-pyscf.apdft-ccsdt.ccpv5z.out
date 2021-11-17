@@ -1,0 +1,69 @@
+-=#  geomeTRIC started. Version: 0.9.7.2  #=-
+geometric-optimize called with the following command line:
+apdft-pyscf-calc.py
+6 internal coordinates being used (instead of 6 Cartesians)
+Internal coordinate system (atoms numbered from 1):
+Distance 1-2
+Translation-X 1-2
+Translation-Y 1-2
+Translation-Z 1-2
+Rotation-A 1-2
+Rotation-B 1-2
+Rotation-C 1-2
+<class 'geometric.internal.Distance'> : 1
+<class 'geometric.internal.TranslationX'> : 1
+<class 'geometric.internal.TranslationY'> : 1
+<class 'geometric.internal.TranslationZ'> : 1
+<class 'geometric.internal.RotationA'> : 1
+<class 'geometric.internal.RotationB'> : 1
+<class 'geometric.internal.RotationC'> : 1
+WARN: alpha nocc = 4  HOMO 0.034355124849019 >= LUMO 0.034355124849022
+WARN: system HOMO 0.034355124849019 >= system LUMO -0.58768530903011
+WARN: system HOMO -0.00126732536169438 >= system LUMO -0.284218181177998
+Step    0 : Gradient = 2.511e-01/2.511e-01 (rms/max) Energy = -14.9267177720
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 4.76883e-01
+Step    1 : Displace = 1.000e-01/1.000e-01 (rms/max) Trust = 1.000e-01 (=) Grad = 1.117e-01/1.117e-01 (rms/max) E (change) = -14.9920106996 (-6.529e-02) Quality = 1.073
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 3.68998e-01
+Step    2 : Displace = 8.007e-02/8.007e-02 (rms/max) Trust = 1.414e-01 (+) Grad = 5.478e-02/5.478e-02 (rms/max) E (change) = -15.0162630425 (-2.425e-02) Quality = 1.435
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 1.87961e-01
+Step    3 : Displace = 7.712e-02/7.712e-02 (rms/max) Trust = 2.000e-01 (+) Grad = 2.781e-02/2.781e-02 (rms/max) E (change) = -15.0278146521 (-1.155e-02) Quality = 1.447
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 9.25419e-02
+Step    4 : Displace = 7.951e-02/7.951e-02 (rms/max) Trust = 2.828e-01 (+) Grad = 1.496e-02/1.496e-02 (rms/max) E (change) = -15.0339880848 (-6.173e-03) Quality = 1.477
+Hessian Eigenvalues: 4.27541e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    5 : Displace = 9.260e-02/9.260e-02 (rms/max) Trust = 3.000e-01 (+) Grad = 8.654e-03/8.654e-03 (rms/max) E (change) = -15.0379467488 (-3.959e-03) Quality = 1.512
+Hessian Eigenvalues: 1.80264e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    6 : Displace = 1.270e-01/1.270e-01 (rms/max) Trust = 3.000e-01 (=) Grad = 5.575e-03/5.575e-03 (rms/max) E (change) = -15.0412452877 (-3.299e-03) Quality = 1.588
+Hessian Eigenvalues: 6.41265e-03 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    7 : Displace = 2.300e-01/2.300e-01 (rms/max) Trust = 3.000e-01 (=) Grad = 2.445e-03/2.445e-03 (rms/max) E (change) = -15.0446222532 (-3.377e-03) Quality = 1.393
+Hessian Eigenvalues: 3.60080e-03 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    8 : Displace = 1.796e-01/1.796e-01 (rms/max) Trust = 3.000e-01 (=) Grad = 1.114e-03/1.114e-03 (rms/max) E (change) = -15.0457847447 (-1.162e-03) Quality = 1.401
+Hessian Eigenvalues: 1.96021e-03 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    9 : Displace = 1.503e-01/1.503e-01 (rms/max) Trust = 3.000e-01 (=) Grad = 4.908e-04/4.908e-04 (rms/max) E (change) = -15.0462239681 (-4.392e-04) Quality = 1.388
+Hessian Eigenvalues: 1.09656e-03 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step   10 : Displace = 1.184e-01/1.184e-01 (rms/max) Trust = 3.000e-01 (=) Grad = 2.129e-04/2.129e-04 (rms/max) E (change) = -15.0463756593 (-1.517e-04) Quality = 1.381
+Hessian Eigenvalues: 6.20760e-04 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step   11 : Displace = 9.076e-02/9.076e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 8.873e-05/8.873e-05 (rms/max) E (change) = -15.0464256066 (-4.995e-05) Quality = 1.368
+Hessian Eigenvalues: 3.62088e-04 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step   12 : Displace = 6.484e-02/6.484e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 3.318e-05/3.318e-05 (rms/max) E (change) = -15.0464400549 (-1.445e-05) Quality = 1.329
+Hessian Eigenvalues: 2.26703e-04 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step   13 : Displace = 3.872e-02/3.872e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 9.905e-06/9.905e-06 (rms/max) E (change) = -15.0464431102 (-3.055e-06) Quality = 1.259
+Hessian Eigenvalues: 1.59021e-04 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step   14 : Displace = 1.648e-02/1.648e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 1.851e-06/1.851e-06 (rms/max) E (change) = -15.0464435219 (-4.116e-07) Quality = 1.334
+Hessian Eigenvalues: 1.29303e-04 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step   15 : Displace = 3.788e-03/3.788e-03 (rms/max) Trust = 3.000e-01 (=) Grad = 1.392e-07/1.392e-07 (rms/max) E (change) = -15.0464435252 (-3.362e-09) Quality = 0.254
+Hessian Eigenvalues: 1.19596e-04 4.99998e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step   16 : Displace = 3.074e-04/3.074e-04 (rms/max) Trust = 3.000e-01 (=) Grad = 1.349e-08/1.349e-08 (rms/max) E (change) = -15.0464435394 (-1.415e-08) Quality = 175.101
+Converged! =D
+
+    #==========================================================================#
+    #| If this code has benefited your research, please support us by citing: |#
+    #|                                                                        |#
+    #| Wang, L.-P.; Song, C.C. (2016) "Geometry optimization made simple with |#
+    #| translation and rotation coordinates", J. Chem, Phys. 144, 214108.     |#
+    #| http://dx.doi.org/10.1063/1.4952956                                    |#
+    #==========================================================================#
+    
+Time elapsed since start of run_optimizer: 2134.200 seconds
+output file: /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/be.h/be.h.chrg0.mult4/be.h.chrg0.mult4.geomopt/be.h.chrg0.mult4.sep1.0-pyscf.apdft-ccsdt.ccpv5z/be.h.chrg0.mult4-pyscf-ccsdt.ccpv5z.log
+Optimized bond length = 3.8992980678573828 A
+

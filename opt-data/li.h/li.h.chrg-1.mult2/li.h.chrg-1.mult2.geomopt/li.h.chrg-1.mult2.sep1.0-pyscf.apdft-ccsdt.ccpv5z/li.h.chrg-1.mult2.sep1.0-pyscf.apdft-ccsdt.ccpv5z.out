@@ -1,0 +1,51 @@
+-=#  geomeTRIC started. Version: 0.9.7.2  #=-
+geometric-optimize called with the following command line:
+apdft-pyscf-calc.py
+6 internal coordinates being used (instead of 6 Cartesians)
+Internal coordinate system (atoms numbered from 1):
+Distance 1-2
+Translation-X 1-2
+Translation-Y 1-2
+Translation-Z 1-2
+Rotation-A 1-2
+Rotation-B 1-2
+Rotation-C 1-2
+<class 'geometric.internal.Distance'> : 1
+<class 'geometric.internal.TranslationX'> : 1
+<class 'geometric.internal.TranslationY'> : 1
+<class 'geometric.internal.TranslationZ'> : 1
+<class 'geometric.internal.RotationA'> : 1
+<class 'geometric.internal.RotationB'> : 1
+<class 'geometric.internal.RotationC'> : 1
+WARN: system HOMO -0.0272187162753682 >= system LUMO -0.0272187162753682
+Step    0 : Gradient = 2.400e-01/2.400e-01 (rms/max) Energy = -7.9636928070
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 4.76883e-01
+Step    1 : Displace = 1.000e-01/1.000e-01 (rms/max) Trust = 1.000e-01 (=) Grad = 1.080e-01/1.080e-01 (rms/max) E (change) = -8.0266729053 (-6.298e-02) Quality = 1.112
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 3.49194e-01
+Step    2 : Displace = 8.187e-02/8.187e-02 (rms/max) Trust = 1.414e-01 (+) Grad = 4.972e-02/4.972e-02 (rms/max) E (change) = -8.0502543242 (-2.358e-02) Quality = 1.411
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 1.88513e-01
+Step    3 : Displace = 6.978e-02/6.978e-02 (rms/max) Trust = 2.000e-01 (+) Grad = 2.069e-02/2.069e-02 (rms/max) E (change) = -8.0592080905 (-8.954e-03) Quality = 1.366
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 1.10051e-01
+Step    4 : Displace = 4.975e-02/4.975e-02 (rms/max) Trust = 2.828e-01 (+) Grad = 7.620e-03/7.620e-03 (rms/max) E (change) = -8.0617935648 (-2.585e-03) Quality = 1.329
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 6.95262e-02
+Step    5 : Displace = 2.900e-02/2.900e-02 (rms/max) Trust = 3.000e-01 (+) Grad = 1.904e-03/1.904e-03 (rms/max) E (change) = -8.0623052540 (-5.117e-04) Quality = 1.225
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.21563e-02
+Step    6 : Displace = 9.658e-03/9.658e-03 (rms/max) Trust = 3.000e-01 (=) Grad = 2.305e-04/2.305e-04 (rms/max) E (change) = -8.0623438800 (-3.863e-05) Quality = 1.112
+Hessian Eigenvalues: 4.58426e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    7 : Displace = 1.330e-03/1.330e-03 (rms/max) Trust = 3.000e-01 (=) Grad = 8.044e-06/8.044e-06 (rms/max) E (change) = -8.0623444905 (-6.105e-07) Quality = 1.054
+Hessian Eigenvalues: 4.42424e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+Step    8 : Displace = 4.811e-05/4.811e-05 (rms/max) Trust = 3.000e-01 (=) Grad = 9.847e-08/9.847e-08 (rms/max) E (change) = -8.0623444879 (+2.547e-09) Quality = -3.483
+Converged! =D
+
+    #==========================================================================#
+    #| If this code has benefited your research, please support us by citing: |#
+    #|                                                                        |#
+    #| Wang, L.-P.; Song, C.C. (2016) "Geometry optimization made simple with |#
+    #| translation and rotation coordinates", J. Chem, Phys. 144, 214108.     |#
+    #| http://dx.doi.org/10.1063/1.4952956                                    |#
+    #==========================================================================#
+    
+Time elapsed since start of run_optimizer: 1321.625 seconds
+output file: /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/li.h/li.h.chrg-1.mult2/li.h.chrg-1.mult2.geomopt/li.h.chrg-1.mult2.sep1.0-pyscf.apdft-ccsdt.ccpv5z/li.h.chrg-1.mult2-pyscf-ccsdt.ccpv5z.log
+Optimized bond length = 1.682872703034685 A
+
