@@ -1,7 +1,7 @@
 {
     "n.h": {
         "n.h.chrg1.mult4": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -29,7 +29,7 @@
             "broken_symmetry": false
         },
         "n.h.chrg0.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -57,7 +57,7 @@
             "broken_symmetry": false
         },
         "n.h.chrg0.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -85,7 +85,7 @@
             "broken_symmetry": false
         },
         "n.h.chrg-1.mult2": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -113,7 +113,7 @@
             "broken_symmetry": false
         },
         "n.h.chrg1.mult2": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -141,7 +141,7 @@
             "broken_symmetry": false
         },
         "n.h.chrg-1.mult4": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -171,7 +171,7 @@
     },
     "o.h": {
         "o.h.chrg1.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -199,7 +199,7 @@
             "broken_symmetry": false
         },
         "o.h.chrg0.mult2": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -227,7 +227,7 @@
             "broken_symmetry": false
         },
         "o.h.chrg-1.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -255,7 +255,7 @@
             "broken_symmetry": false
         },
         "o.h.chrg1.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -283,7 +283,7 @@
             "broken_symmetry": false
         },
         "o.h.chrg-1.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -313,7 +313,7 @@
     },
     "be.h": {
         "be.h.chrg0.mult4": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -341,7 +341,7 @@
             "broken_symmetry": false
         },
         "be.h.chrg1.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -369,7 +369,7 @@
             "broken_symmetry": false
         },
         "be.h.chrg-1.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -397,7 +397,7 @@
             "broken_symmetry": false
         },
         "be.h.chrg0.mult2": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -425,7 +425,7 @@
             "broken_symmetry": false
         },
         "be.h.chrg1.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -453,7 +453,7 @@
             "broken_symmetry": false
         },
         "be.h.chrg-1.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -483,7 +483,7 @@
     },
     "li.h": {
         "li.h.chrg0.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -511,7 +511,7 @@
             "broken_symmetry": false
         },
         "li.h.chrg0.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -539,7 +539,7 @@
             "broken_symmetry": false
         },
         "li.h.chrg-1.mult4": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -567,7 +567,7 @@
             "broken_symmetry": false
         },
         "li.h.chrg-1.mult2": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -597,7 +597,7 @@
     },
     "c.h": {
         "c.h.chrg-1.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -625,7 +625,7 @@
             "broken_symmetry": false
         },
         "c.h.chrg1.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -653,7 +653,7 @@
             "broken_symmetry": false
         },
         "c.h.chrg0.mult2": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -681,7 +681,7 @@
             "broken_symmetry": false
         },
         "c.h.chrg1.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -709,7 +709,7 @@
             "broken_symmetry": false
         },
         "c.h.chrg-1.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -737,7 +737,7 @@
             "broken_symmetry": false
         },
         "c.h.chrg0.mult4": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -767,7 +767,7 @@
     },
     "b.h": {
         "b.h.chrg-1.mult2": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -795,7 +795,7 @@
             "broken_symmetry": false
         },
         "b.h.chrg1.mult2": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -823,7 +823,7 @@
             "broken_symmetry": false
         },
         "b.h.chrg0.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -851,7 +851,7 @@
             "broken_symmetry": false
         },
         "b.h.chrg1.mult4": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -879,7 +879,7 @@
             "broken_symmetry": false
         },
         "b.h.chrg-1.mult4": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -907,7 +907,7 @@
             "broken_symmetry": false
         },
         "b.h.chrg0.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -937,7 +937,7 @@
     },
     "ne.h": {
         "ne.h.chrg1.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -965,7 +965,7 @@
             "broken_symmetry": false
         },
         "ne.h.chrg1.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -995,7 +995,7 @@
     },
     "f.h": {
         "f.h.chrg0.mult1": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -1023,7 +1023,7 @@
             "broken_symmetry": false
         },
         "f.h.chrg1.mult2": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -1051,7 +1051,7 @@
             "broken_symmetry": false
         },
         "f.h.chrg1.mult4": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
@@ -1079,7 +1079,7 @@
             "broken_symmetry": false
         },
         "f.h.chrg0.mult3": {
-            "schema_name": "pyscf_apdft_output",
+            "schema_name": "pyscf_qa_output",
             "provenance": {
                 "creator": "PySCF",
                 "version": "1.7.6"
