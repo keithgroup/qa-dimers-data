@@ -1,0 +1,41 @@
+-=#  geomeTRIC started. Version: 0.9.7.2  #=-
+geometric-optimize called with the following command line:
+apdft-pyscf-calc.py
+6 internal coordinates being used (instead of 6 Cartesians)
+Internal coordinate system (atoms numbered from 1):
+Distance 1-2
+Translation-X 1-2
+Translation-Y 1-2
+Translation-Z 1-2
+Rotation-A 1-2
+Rotation-B 1-2
+Rotation-C 1-2
+<class 'geometric.internal.Distance'> : 1
+<class 'geometric.internal.TranslationX'> : 1
+<class 'geometric.internal.TranslationY'> : 1
+<class 'geometric.internal.TranslationZ'> : 1
+<class 'geometric.internal.RotationA'> : 1
+<class 'geometric.internal.RotationB'> : 1
+<class 'geometric.internal.RotationC'> : 1
+WARN: system HOMO -0.20522685508158 >= system LUMO -0.205226855081585
+Step    0 : Gradient = 2.646e-02/2.646e-02 (rms/max) Energy = -55.1885529333
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 4.76883e-01
+Step    1 : Displace = 1.468e-02/1.468e-02 (rms/max) Trust = 1.000e-01 (=) Grad = 1.923e-03/1.923e-03 (rms/max) E (change) = -55.1893187602 (-7.658e-04) Quality = 1.043
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 4.42230e-01
+Step    2 : Displace = 1.151e-03/1.151e-03 (rms/max) Trust = 1.414e-01 (+) Grad = 1.933e-04/1.933e-04 (rms/max) E (change) = -55.1893233684 (-4.608e-06) Quality = 1.102
+Hessian Eigenvalues: 4.99999e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 3.97784e-01
+Step    3 : Displace = 1.286e-04/1.286e-04 (rms/max) Trust = 2.000e-01 (+) Grad = 1.540e-06/1.540e-06 (rms/max) E (change) = -55.1893233903 (-2.195e-08) Quality = 0.467
+Converged! =D
+
+    #==========================================================================#
+    #| If this code has benefited your research, please support us by citing: |#
+    #|                                                                        |#
+    #| Wang, L.-P.; Song, C.C. (2016) "Geometry optimization made simple with |#
+    #| translation and rotation coordinates", J. Chem, Phys. 144, 214108.     |#
+    #| http://dx.doi.org/10.1063/1.4952956                                    |#
+    #==========================================================================#
+    
+Time elapsed since start of run_optimizer: 823.633 seconds
+output file: /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/n.h/n.h.chrg0.mult3/n.h.chrg0.mult3.geomopt/n.h.chrg0.mult3.sep1.0-pyscf.qa-ccsdt.ccpv5z/n.h.chrg0.mult3-pyscf-ccsdt.ccpv5z.log
+Optimized bond length = 1.0319252031619215 A
+

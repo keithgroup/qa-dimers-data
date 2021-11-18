@@ -1,0 +1,1479 @@
+#INFO: **** input file is /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/f.h/f.h.chrg1.mult4/f.h.chrg1.mult4.geomopt/f.h.chrg1.mult4.sep1.0-pyscf.qa-ccsdt.ccpv5z/apdft-pyscf-calc.py ****
+
+import os
+import pathlib
+import re
+import numpy as np
+import json
+import pyscf
+import pyscf.gto
+import pyscf.qmmm
+from pyscf import scf
+import pyscf.dft
+import pyscf.lib
+import pyscf.mp
+from pyscf.geomopt.geometric_solver import optimize
+from pyscf import __version__ as pyscf_version
+import findiff
+import matplotlib.pyplot as plt
+
+try:
+    import cclib
+    has_cclib = True
+except:
+    has_cclib = False
+
+try:
+    from mpi4pyscf import scf
+except:
+    pass
+
+# Specifying system.
+atoms = ['F', 'H']
+dimer_sep = 1.0  # `None` if a single atom, float if dimer (in Angstroms).
+charge = 1
+multiplicity = 4
+scf_conv_tol = 1e-09  # Default: 1e-9
+scf_conv_tol_grad = 1e-06  # Default: 3.162e-6
+cc_conv_tol = 1e-07  # Default: 1e-7
+cc_conv_tol_normt = 1e-05  # Default: 1e-5
+
+scf_diis_space = 16  # Default: 8
+cc_diis_space = 12  # Default: 6
+
+# Specifying calculation.
+qc_method = 'CCSD(T)'
+basis_set = 'cc-pV5Z'  # cc-pV5Z
+n_cores = 6  # Number of cores used on SMP (used for max memory).
+
+
+
+
+
+#####     NO CHANGES NEEDED BELOW     #####
+
+
+# Setting up paths.
+work_dir = str(pathlib.Path(__file__).parent.resolve())
+if work_dir[-1] == '/': work_dir = work_dir[:-1]  # Ensures path does NOT end in '/'
+
+_element_to_z = {
+    'H': 1, 'He': 2, 'Li': 3, 'Be': 4, 'B': 5, 'C': 6, 'N': 7, 'O': 8, 'F': 9,
+    'Ne': 10, 'Na': 11, 'Mg': 12, 'Al': 13, 'Si': 14, 'P': 15, 'S': 16,
+    'Cl': 17, 'Ar': 18
+}
+
+def atoms_by_number(atom_list):
+    return [_element_to_z[i] for i in atom_list]
+
+qc_method_lower = qc_method.lower()
+atomic_numbers = atoms_by_number(atoms)
+qc_method_label = qc_method
+
+# Plot colors
+ref_color = 'dimgrey'
+
+def get_sys_label(atoms, charge, multiplicity, dimer_sep=None):
+    atoms_label = '.'.join([i.lower() for i in atoms])
+    return f'{atoms_label}.chrg{charge}.mult{multiplicity}'
+
+def get_calc_label(sys_label, qc_method, basis_set):
+    pattern = re.compile('[\W_]+')
+    qc_method_label = pattern.sub('', qc_method.lower())
+    basis_set_label = pattern.sub('', basis_set.lower())
+    return f'{sys_label}-pyscf-{qc_method_label}.{basis_set_label}'
+
+# Prepares molecular structures.
+mol = pyscf.gto.Mole()
+
+## Atomic coordinates in units of Angstrom.
+mol.unit = 'angstrom'  # Insures Angstroms are enforced.
+coords = np.array([np.zeros(3)])
+mol.atom = [[atoms[0], coords[0]]]
+if len(atoms) == 2:
+    assert dimer_sep is not None
+    coords = np.vstack((coords, np.array([dimer_sep, 0, 0])))
+    mol.atom.extend([[atoms[1], coords[1]]])
+elif len(atoms) == 1:
+    assert dimer_sep is None
+
+mol.charge = charge
+mol.multiplicity = multiplicity
+mol.basis = basis_set
+
+# Handles cores and memory.
+os.environ['OMP_NUM_THREADS'] = f'{n_cores}'  # For CRC jobs only.
+mol.max_memory = 8000 * n_cores
+
+# Handles calculation logging.
+mol.verbose = 4  # Controls print level; 4 is recommended.
+system_label = get_sys_label(atoms, charge, multiplicity, dimer_sep=dimer_sep)
+calc_label = get_calc_label(system_label, qc_method_label, basis_set)
+mol.output = f'{work_dir}/{calc_label}.log'  # Sets the output file.
+
+# Builds the molecular structure. (Must go after everything else).
+mol.build()
+
+
+
+def _calc_distance(r1, r2):
+    """Calculates the Euclidean distance between two points.
+
+    Parameters
+    ----------
+    r1 : :obj:`numpy.ndarray`
+        Cartesian coordinates of a point with shape ``(3,)``.
+    r2 : :obj:`numpy.ndarray`
+        Cartesian coordinates of a point with shape ``(3,)``.
+    """
+    return np.linalg.norm(r1 - r2)
+
+
+
+calc = scf.HF(mol)
+
+calc.chkfile = None
+
+calc.max_cycle = 200  # Default: 50
+calc.conv_tol = scf_conv_tol
+calc.conv_tol_grad = scf_conv_tol_grad
+calc.diis_space = scf_diis_space
+
+cc_calc = pyscf.cc.CCSD(calc)
+cc_calc.max_cycle = 200
+cc_calc.conv_tol = cc_conv_tol
+cc_calc.conv_tol_normt = cc_conv_tol_normt
+cc_calc.diis_space = cc_diis_space
+
+mol_eq = optimize(cc_calc, maxsteps=100)
+
+coords = mol_eq.atom_coords(unit='Angstrom')
+distance = _calc_distance(coords[0], coords[1])
+print(f'Optimized bond length = {distance} A')
+#INFO: ******************** input file end ********************
+
+
+System: uname_result(system='Linux', node='smp-n75.crc.pitt.edu', release='3.10.0-1160.15.2.el7.x86_64', version='#1 SMP Thu Jan 21 16:15:07 EST 2021', machine='x86_64', processor='x86_64')  Threads 6
+Python 3.7.0 (default, Jun 28 2018, 13:15:42) 
+[GCC 7.2.0]
+numpy 1.21.2  scipy 1.7.1
+Date: Mon Nov 15 13:36:42 2021
+PySCF version 1.7.6
+PySCF path  /ihome/jkeith/amm503/.local/lib/python3.7/site-packages/pyscf
+
+[CONFIG] conf_file None
+[INPUT] verbose = 4
+[INPUT] num. atoms = 2
+[INPUT] num. electrons = 9
+[INPUT] charge = 1
+[INPUT] spin (= nelec alpha-beta = 2S) = 3
+[INPUT] symmetry False subgroup None
+[INPUT] Mole.unit = angstrom
+[INPUT]  1 F      0.000000000000   0.000000000000   0.000000000000 AA    0.000000000000   0.000000000000   0.000000000000 Bohr
+[INPUT]  2 H      1.000000000000   0.000000000000   0.000000000000 AA    1.889726124565   0.000000000000   0.000000000000 Bohr
+
+nuclear repulsion = 4.76259489828
+number of shells = 35
+number of NR pGTOs = 166
+number of NR cGTOs = 146
+basis = cc-pV5Z
+ecp = {}
+CPU time:         2.16
+Create scanner for <class 'pyscf.grad.uccsd.Gradients'>
+Set <class 'pyscf.cc.uccsd.UCCSD'> as a scanner
+Create scanner for <class 'pyscf.scf.uhf.UHF'>
+
+Geometry optimization cycle 1
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F   0.000000   0.000000   0.000000    0.000000  0.000000  0.000000
+   H   1.000000   0.000000   0.000000    0.000000  0.000000  0.000000
+New geometry
+   1 F      0.000000000000   0.000000000000   0.000000000000 AA    0.000000000000   0.000000000000   0.000000000000 Bohr
+
+   2 H      1.000000000000   0.000000000000   0.000000000000 AA    1.889726124565   0.000000000000   0.000000000000 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 145 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.78993122634
+  alpha nocc = 6  HOMO = 0.0410986186648445  LUMO = 0.29281004869657
+  beta  nocc = 3  HOMO = -0.799707232272425  LUMO = -0.651916571480643
+
+WARN: system HOMO 0.0410986186648445 >= system LUMO -0.651916571480643
+
+cycle= 1 E= -98.7315118740537  delta_E= 1.06  |g|= 0.869  |ddm|= 2.17
+  alpha nocc = 6  HOMO = -0.623328282440169  LUMO = -0.136854939434934
+  beta  nocc = 3  HOMO = -1.83355201458951  LUMO = -0.997686819624923
+
+WARN: system HOMO -0.291816481183221 >= system LUMO -0.997686819624923
+
+cycle= 2 E= -99.0574620117739  delta_E= -0.326  |g|= 0.329  |ddm|=  1.9
+  alpha nocc = 6  HOMO = -0.619551570023755  LUMO = -0.0727973125313677
+  beta  nocc = 3  HOMO = -1.51811637698491  LUMO = -0.630616448620908
+
+WARN: system HOMO -0.182912893678916 >= system LUMO -0.630616448620908
+
+cycle= 3 E= -99.083481751992  delta_E= -0.026  |g|= 0.0564  |ddm|= 0.344
+  alpha nocc = 6  HOMO = -0.635946840870187  LUMO = -0.0576064382883761
+  beta  nocc = 3  HOMO = -1.47536327722173  LUMO = -0.588622043450746
+cycle= 4 E= -99.0878580679485  delta_E= -0.00438  |g|= 0.0202  |ddm|= 0.222
+  alpha nocc = 6  HOMO = -0.640612426384545  LUMO = -0.0587030873228048
+  beta  nocc = 3  HOMO = -1.46376177644343  LUMO = -0.58137388969556
+cycle= 5 E= -99.0886656117762  delta_E= -0.000808  |g|= 0.00607  |ddm|= 0.0826
+  alpha nocc = 6  HOMO = -0.641952018043049  LUMO = -0.0589960888782695
+  beta  nocc = 3  HOMO = -1.45876397416764  LUMO = -0.578325582408456
+cycle= 6 E= -99.0887327429031  delta_E= -6.71e-05  |g|= 0.000966  |ddm|= 0.0286
+  alpha nocc = 6  HOMO = -0.642031947130992  LUMO = -0.0589117007003407
+  beta  nocc = 3  HOMO = -1.45877100769678  LUMO = -0.578160409623054
+cycle= 7 E= -99.0887333003441  delta_E= -5.57e-07  |g|= 0.000238  |ddm|= 0.00226
+  alpha nocc = 6  HOMO = -0.642036191761764  LUMO = -0.0589276130413703
+  beta  nocc = 3  HOMO = -1.45902901778704  LUMO = -0.578285170943162
+cycle= 8 E= -99.0887333399505  delta_E= -3.96e-08  |g|= 3.78e-05  |ddm|= 0.000565
+  alpha nocc = 6  HOMO = -0.642032793378642  LUMO = -0.0589346280235364
+  beta  nocc = 3  HOMO = -1.45904963097287  LUMO = -0.57828961314335
+cycle= 9 E= -99.0887333411341  delta_E= -1.18e-09  |g|= 5.46e-06  |ddm|= 8.67e-05
+  alpha nocc = 6  HOMO = -0.642035212019488  LUMO = -0.0589328097220398
+  beta  nocc = 3  HOMO = -1.45904725333657  LUMO = -0.578286873221565
+cycle= 10 E= -99.0887333411565  delta_E= -2.23e-11  |g|= 1.23e-06  |ddm|= 2.17e-05
+  alpha nocc = 6  HOMO = -0.642034814462294  LUMO = -0.0589330178826005
+  beta  nocc = 3  HOMO = -1.45904810649267  LUMO = -0.578287284773083
+cycle= 11 E= -99.0887333411578  delta_E= -1.39e-12  |g|= 1.53e-07  |ddm|= 3.16e-06
+  alpha nocc = 6  HOMO = -0.642034855547713  LUMO = -0.0589329683972401
+  beta  nocc = 3  HOMO = -1.4590480583995  LUMO = -0.578287225964773
+Extra cycle  E= -99.0887333411577  delta_E= 9.95e-14  |g|= 6.29e-08  |ddm|= 9.53e-07
+converged SCF energy = -99.0887333411577  <S^2> = 3.755024  2S+1 = 4.0025112
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3324 MB)
+Init t2, MP2 energy = -0.212999489150895
+Init E_corr(CCSD) = -0.212999489150897
+cycle = 1  E_corr(CCSD) = -0.224603045165685  dE = -0.011603556  norm(t1,t2) = 0.0241241
+cycle = 2  E_corr(CCSD) = -0.227059882310011  dE = -0.00245683714  norm(t1,t2) = 0.00879859
+cycle = 3  E_corr(CCSD) = -0.228126235520753  dE = -0.00106635321  norm(t1,t2) = 0.00414537
+cycle = 4  E_corr(CCSD) = -0.228049569988847  dE = 7.66655319e-05  norm(t1,t2) = 0.000961796
+cycle = 5  E_corr(CCSD) = -0.228040648705919  dE = 8.92128293e-06  norm(t1,t2) = 0.000266975
+cycle = 6  E_corr(CCSD) = -0.228048430684454  dE = -7.78197853e-06  norm(t1,t2) = 7.49209e-05
+cycle = 7  E_corr(CCSD) = -0.228047948704167  dE = 4.81980287e-07  norm(t1,t2) = 2.05465e-05
+cycle = 8  E_corr(CCSD) = -0.228047551789969  dE = 3.96914198e-07  norm(t1,t2) = 7.82052e-06
+cycle = 9  E_corr(CCSD) = -0.228047730253039  dE = -1.78463069e-07  norm(t1,t2) = 2.85034e-06
+cycle = 10  E_corr(CCSD) = -0.228047725525399  dE = 4.72763942e-09  norm(t1,t2) = 6.30779e-07
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.31678106668315  E_corr = -0.2280477255253991
+cycle = 1  norm(lambda1,lambda2) = 0.00323351
+cycle = 2  norm(lambda1,lambda2) = 0.000643933
+cycle = 3  norm(lambda1,lambda2) = 0.000300126
+cycle = 4  norm(lambda1,lambda2) = 8.19826e-05
+cycle = 5  norm(lambda1,lambda2) = 3.24905e-05
+cycle = 6  norm(lambda1,lambda2) = 4.90045e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.3684029120    -0.0000000000     0.0000000000
+1 H    -0.3684029120     0.0000000000    -0.0000000000
+----------------------------------------------
+cycle 1: E = -99.3167810667  dE = -99.3168  norm(grad) = 0.521
+
+Geometry optimization cycle 2
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.100000   0.000000  -0.000000   -0.100000  0.000000 -0.000000
+   H   1.100000  -0.000000   0.000000    0.100000 -0.000000  0.000000
+New geometry
+   1 F     -0.100000000000   0.000000000000  -0.000000000000 AA   -0.188972612457   0.000000000000  -0.000000000000 Bohr
+
+   2 H      1.100000000000  -0.000000000000   0.000000000000 AA    2.078698737021  -0.000000000000   0.000000000000 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 477 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.2886231035957
+  alpha nocc = 6  HOMO = -0.720165879400985  LUMO = -0.0215363350020512
+  beta  nocc = 3  HOMO = -1.30783754795217  LUMO = -0.49253902483792
+cycle= 1 E= -99.1974064403863  delta_E= 0.0912  |g|= 0.042  |ddm|= 0.301
+  alpha nocc = 6  HOMO = -0.713115025618418  LUMO = -0.0566695442017663
+  beta  nocc = 3  HOMO = -1.37826397915617  LUMO = -0.540665145332437
+cycle= 2 E= -99.1986467079373  delta_E= -0.00124  |g|= 0.0158  |ddm|= 0.0386
+  alpha nocc = 6  HOMO = -0.714297625439729  LUMO = -0.0565033411233041
+  beta  nocc = 3  HOMO = -1.37090073458741  LUMO = -0.53286030888058
+cycle= 3 E= -99.1989094981067  delta_E= -0.000263  |g|= 0.00389  |ddm|= 0.0223
+  alpha nocc = 6  HOMO = -0.715494860250897  LUMO = -0.0567098149535755
+  beta  nocc = 3  HOMO = -1.37184516864794  LUMO = -0.533240981827748
+cycle= 4 E= -99.1989269409989  delta_E= -1.74e-05  |g|= 0.000915  |ddm|= 0.00741
+  alpha nocc = 6  HOMO = -0.71560500800542  LUMO = -0.0567145890614516
+  beta  nocc = 3  HOMO = -1.37145214404612  LUMO = -0.532630782923211
+cycle= 5 E= -99.1989275609385  delta_E= -6.2e-07  |g|= 0.000182  |ddm|= 0.00146
+  alpha nocc = 6  HOMO = -0.715626375753507  LUMO = -0.0567231051196992
+  beta  nocc = 3  HOMO = -1.37159358156367  LUMO = -0.532703165615996
+cycle= 6 E= -99.1989275954969  delta_E= -3.46e-08  |g|= 3.53e-05  |ddm|= 0.000398
+  alpha nocc = 6  HOMO = -0.715623742773774  LUMO = -0.0567237718215041
+  beta  nocc = 3  HOMO = -1.37161053510292  LUMO = -0.532707216430792
+cycle= 7 E= -99.1989275965122  delta_E= -1.02e-09  |g|= 6.05e-06  |ddm|= 0.000113
+  alpha nocc = 6  HOMO = -0.71562284651305  LUMO = -0.0567238552233737
+  beta  nocc = 3  HOMO = -1.37161421238081  LUMO = -0.532708953221327
+cycle= 8 E= -99.1989275965406  delta_E= -2.84e-11  |g|= 1.1e-06  |ddm|= 1.63e-05
+  alpha nocc = 6  HOMO = -0.715622689596119  LUMO = -0.0567238203384199
+  beta  nocc = 3  HOMO = -1.37161470539607  LUMO = -0.532709151152844
+cycle= 9 E= -99.1989275965422  delta_E= -1.59e-12  |g|= 1.72e-07  |ddm|= 2.95e-06
+  alpha nocc = 6  HOMO = -0.715622681119593  LUMO = -0.0567238160820016
+  beta  nocc = 3  HOMO = -1.37161477558237  LUMO = -0.532709171279138
+Extra cycle  E= -99.1989275965422  delta_E= 4.26e-14  |g|= 7.07e-08  |ddm|= 4.35e-07
+converged SCF energy = -99.1989275965422  <S^2> = 3.755304  2S+1 = 4.0026511
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3514 MB)
+Init E_corr(CCSD) = -0.0173205907441679
+cycle = 1  E_corr(CCSD) = -0.211676577660944  dE = -0.194355987  norm(t1,t2) = 0.207754
+cycle = 2  E_corr(CCSD) = -0.222226376383203  dE = -0.0105497987  norm(t1,t2) = 0.0333162
+cycle = 3  E_corr(CCSD) = -0.225145029138582  dE = -0.00291865276  norm(t1,t2) = 0.0111099
+cycle = 4  E_corr(CCSD) = -0.225233961404332  dE = -8.89322658e-05  norm(t1,t2) = 0.00315216
+cycle = 5  E_corr(CCSD) = -0.225239289137087  dE = -5.32773275e-06  norm(t1,t2) = 0.00105572
+cycle = 6  E_corr(CCSD) = -0.225250664121231  dE = -1.13749841e-05  norm(t1,t2) = 0.000324366
+cycle = 7  E_corr(CCSD) = -0.225250058891868  dE = 6.05229363e-07  norm(t1,t2) = 8.81579e-05
+cycle = 8  E_corr(CCSD) = -0.2252501498684  dE = -9.09765319e-08  norm(t1,t2) = 3.27556e-05
+cycle = 9  E_corr(CCSD) = -0.225250387346898  dE = -2.37478499e-07  norm(t1,t2) = 1.13416e-05
+cycle = 10  E_corr(CCSD) = -0.225250328004146  dE = 5.9342752e-08  norm(t1,t2) = 4.47246e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.4241779245463  E_corr = -0.2252503280041462
+cycle = 1  norm(lambda1,lambda2) = 0.208431
+cycle = 2  norm(lambda1,lambda2) = 0.0301337
+cycle = 3  norm(lambda1,lambda2) = 0.0100902
+cycle = 4  norm(lambda1,lambda2) = 0.00295039
+cycle = 5  norm(lambda1,lambda2) = 0.00104064
+cycle = 6  norm(lambda1,lambda2) = 0.000301615
+cycle = 7  norm(lambda1,lambda2) = 8.63742e-05
+cycle = 8  norm(lambda1,lambda2) = 3.173e-05
+cycle = 9  norm(lambda1,lambda2) = 1.09423e-05
+cycle = 10  norm(lambda1,lambda2) = 4.9995e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.2126996779     0.0000000147     0.0000002123
+1 H    -0.2126996779    -0.0000000147    -0.0000002123
+----------------------------------------------
+cycle 2: E = -99.4241779245  dE = -0.107397  norm(grad) = 0.300803
+
+Geometry optimization cycle 3
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.236606  -0.000001  -0.000019   -0.136606 -0.000001 -0.000019
+   H   1.236606   0.000001   0.000019    0.136606  0.000001  0.000019
+New geometry
+   1 F     -0.236605818663  -0.000001300041  -0.000018798158 AA   -0.447120196752  -0.000002456721  -0.000035523370 Bohr
+
+   2 H      1.236605818684   0.000001300041   0.000018798158 AA    2.336846321357   0.000002456721   0.000035523370 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 568 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3703531443015
+  alpha nocc = 6  HOMO = -0.760943819839164  LUMO = -0.0167234466657537
+  beta  nocc = 3  HOMO = -1.25666236033269  LUMO = -0.4658276391078
+cycle= 1 E= -99.2782122404379  delta_E= 0.0921  |g|= 0.0366  |ddm|= 0.204
+  alpha nocc = 6  HOMO = -0.757208148894293  LUMO = -0.0468956653502027
+  beta  nocc = 3  HOMO = -1.32521758001508  LUMO = -0.509210634421475
+cycle= 2 E= -99.2790159389059  delta_E= -0.000804  |g|= 0.0126  |ddm|= 0.0253
+  alpha nocc = 6  HOMO = -0.757105426159484  LUMO = -0.0467737815449039
+  beta  nocc = 3  HOMO = -1.32149554232215  LUMO = -0.502974261156866
+cycle= 3 E= -99.2791392624815  delta_E= -0.000123  |g|= 0.0031  |ddm|= 0.0113
+  alpha nocc = 6  HOMO = -0.757681994445461  LUMO = -0.0468881515227231
+  beta  nocc = 3  HOMO = -1.3233880839182  LUMO = -0.504015335894391
+cycle= 4 E= -99.2791461424195  delta_E= -6.88e-06  |g|= 0.000824  |ddm|= 0.00269
+  alpha nocc = 6  HOMO = -0.757810042990769  LUMO = -0.0468986199883993
+  beta  nocc = 3  HOMO = -1.32327223594558  LUMO = -0.503611517744085
+cycle= 5 E= -99.2791465801445  delta_E= -4.38e-07  |g|= 0.000134  |ddm|= 0.000883
+  alpha nocc = 6  HOMO = -0.757822117324974  LUMO = -0.0469027335282991
+  beta  nocc = 3  HOMO = -1.32337415967955  LUMO = -0.503659094303483
+cycle= 6 E= -99.2791465952088  delta_E= -1.51e-08  |g|= 2.72e-05  |ddm|= 0.00017
+  alpha nocc = 6  HOMO = -0.757821643782096  LUMO = -0.0469028757106506
+  beta  nocc = 3  HOMO = -1.32338580182747  LUMO = -0.503660912565738
+cycle= 7 E= -99.279146595868  delta_E= -6.59e-10  |g|= 4.73e-06  |ddm|= 4.31e-05
+  alpha nocc = 6  HOMO = -0.757821255815776  LUMO = -0.0469028666832039
+  beta  nocc = 3  HOMO = -1.32338815309338  LUMO = -0.503661666239205
+cycle= 8 E= -99.2791465958839  delta_E= -1.58e-11  |g|= 7.1e-07  |ddm|= 7.03e-06
+  alpha nocc = 6  HOMO = -0.75782120687604  LUMO = -0.0469028526593005
+  beta  nocc = 3  HOMO = -1.32338824064282  LUMO = -0.503661636914283
+Extra cycle  E= -99.2791465958844  delta_E= -5.4e-13  |g|= 3.62e-07  |ddm|= 6.49e-07
+converged SCF energy = -99.2791465958844  <S^2> = 3.7553817  2S+1 = 4.0026899
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3605 MB)
+Init E_corr(CCSD) = -0.0231327171569487
+cycle = 1  E_corr(CCSD) = -0.209427322818228  dE = -0.186294606  norm(t1,t2) = 0.198457
+cycle = 2  E_corr(CCSD) = -0.219149524030021  dE = -0.00972220121  norm(t1,t2) = 0.0316264
+cycle = 3  E_corr(CCSD) = -0.221560992604039  dE = -0.00241146857  norm(t1,t2) = 0.0089975
+cycle = 4  E_corr(CCSD) = -0.221607847452252  dE = -4.68548482e-05  norm(t1,t2) = 0.0019604
+cycle = 5  E_corr(CCSD) = -0.221603371614961  dE = 4.47583729e-06  norm(t1,t2) = 0.000631918
+cycle = 6  E_corr(CCSD) = -0.221615460353534  dE = -1.20887386e-05  norm(t1,t2) = 0.000237343
+cycle = 7  E_corr(CCSD) = -0.22161635127712  dE = -8.90923586e-07  norm(t1,t2) = 7.16404e-05
+cycle = 8  E_corr(CCSD) = -0.221616079113629  dE = 2.72163491e-07  norm(t1,t2) = 2.47544e-05
+cycle = 9  E_corr(CCSD) = -0.221616209644825  dE = -1.30531196e-07  norm(t1,t2) = 9.93368e-06
+cycle = 10  E_corr(CCSD) = -0.221616187428447  dE = 2.22163776e-08  norm(t1,t2) = 6.79272e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.50076278331285  E_corr = -0.2216161874284474
+cycle = 1  norm(lambda1,lambda2) = 0.198935
+cycle = 2  norm(lambda1,lambda2) = 0.0287578
+cycle = 3  norm(lambda1,lambda2) = 0.00818048
+cycle = 4  norm(lambda1,lambda2) = 0.0019029
+cycle = 5  norm(lambda1,lambda2) = 0.0006304
+cycle = 6  norm(lambda1,lambda2) = 0.000228151
+cycle = 7  norm(lambda1,lambda2) = 7.04136e-05
+cycle = 8  norm(lambda1,lambda2) = 2.35835e-05
+cycle = 9  norm(lambda1,lambda2) = 9.10546e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0981482485     0.0000001827     0.0000027387
+1 H    -0.0981482485    -0.0000001827    -0.0000027387
+----------------------------------------------
+cycle 3: E = -99.5007627833  dE = -0.0765849  norm(grad) = 0.138803
+
+Geometry optimization cycle 4
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.353650  -0.000003  -0.000056   -0.117045 -0.000002 -0.000037
+   H   1.353650   0.000003   0.000056    0.117045  0.000002  0.000037
+New geometry
+   1 F     -0.353650378963  -0.000003187311  -0.000055687124 AA   -0.668302360089  -0.000006023144  -0.000105233414 Bohr
+
+   2 H      1.353650378994   0.000003187311   0.000055687124 AA    2.558028484713   0.000006023144   0.000105233414 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 565 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3584556480021
+  alpha nocc = 6  HOMO = -0.760336841320207  LUMO = -0.0220649295521931
+  beta  nocc = 3  HOMO = -1.27704977192254  LUMO = -0.472901005077079
+cycle= 1 E= -99.3123280641124  delta_E= 0.0461  |g|= 0.0193  |ddm|= 0.0904
+  alpha nocc = 6  HOMO = -0.760228350580951  LUMO = -0.0360641941203171
+  beta  nocc = 3  HOMO = -1.30987862484184  LUMO = -0.49591375563961
+cycle= 2 E= -99.3125427558973  delta_E= -0.000215  |g|= 0.00622  |ddm|= 0.0128
+  alpha nocc = 6  HOMO = -0.759892755014431  LUMO = -0.0359269207320804
+  beta  nocc = 3  HOMO = -1.30746743661856  LUMO = -0.492235010995215
+cycle= 3 E= -99.3125698098018  delta_E= -2.71e-05  |g|= 0.00175  |ddm|= 0.00524
+  alpha nocc = 6  HOMO = -0.760034155821937  LUMO = -0.035966475692384
+  beta  nocc = 3  HOMO = -1.30866468505474  LUMO = -0.49296053950815
+cycle= 4 E= -99.3125715860638  delta_E= -1.78e-06  |g|= 0.000406  |ddm|= 0.00127
+  alpha nocc = 6  HOMO = -0.760088790079272  LUMO = -0.0359716771728874
+  beta  nocc = 3  HOMO = -1.30867378674785  LUMO = -0.492816152764288
+cycle= 5 E= -99.3125716855949  delta_E= -9.95e-08  |g|= 6.68e-05  |ddm|= 0.000367
+  alpha nocc = 6  HOMO = -0.760093812738436  LUMO = -0.0359733085517399
+  beta  nocc = 3  HOMO = -1.30871795061501  LUMO = -0.492833413613914
+cycle= 6 E= -99.3125716886961  delta_E= -3.1e-09  |g|= 1.41e-05  |ddm|= 6.59e-05
+  alpha nocc = 6  HOMO = -0.760094019174667  LUMO = -0.0359734281850779
+  beta  nocc = 3  HOMO = -1.30872421397353  LUMO = -0.492834385174237
+cycle= 7 E= -99.3125716888828  delta_E= -1.87e-10  |g|= 2.26e-06  |ddm|= 1.84e-05
+  alpha nocc = 6  HOMO = -0.760093950513813  LUMO = -0.0359734327531482
+  beta  nocc = 3  HOMO = -1.30872538861453  LUMO = -0.492834727312588
+cycle= 8 E= -99.3125716888868  delta_E= -4.02e-12  |g|= 3.69e-07  |ddm|= 2.75e-06
+  alpha nocc = 6  HOMO = -0.760093936840884  LUMO = -0.0359734282734203
+  beta  nocc = 3  HOMO = -1.3087254131227  LUMO = -0.492834705267203
+Extra cycle  E= -99.3125716888869  delta_E= -7.11e-14  |g|= 2.45e-07  |ddm|= 2.29e-07
+converged SCF energy = -99.3125716888869  <S^2> = 3.7553164  2S+1 = 4.0026573
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3602 MB)
+Init E_corr(CCSD) = -0.0726866782353748
+cycle = 1  E_corr(CCSD) = -0.210794857181635  dE = -0.138108179  norm(t1,t2) = 0.176301
+cycle = 2  E_corr(CCSD) = -0.217898752136835  dE = -0.00710389496  norm(t1,t2) = 0.0251836
+cycle = 3  E_corr(CCSD) = -0.21958383282273  dE = -0.00168508069  norm(t1,t2) = 0.00691344
+cycle = 4  E_corr(CCSD) = -0.219650896791368  dE = -6.70639686e-05  norm(t1,t2) = 0.00161458
+cycle = 5  E_corr(CCSD) = -0.219644788701176  dE = 6.10809019e-06  norm(t1,t2) = 0.000554977
+cycle = 6  E_corr(CCSD) = -0.219649236383707  dE = -4.44768253e-06  norm(t1,t2) = 0.00019756
+cycle = 7  E_corr(CCSD) = -0.219649964266783  dE = -7.27883076e-07  norm(t1,t2) = 6.66643e-05
+cycle = 8  E_corr(CCSD) = -0.219649615662448  dE = 3.48604335e-07  norm(t1,t2) = 2.85115e-05
+cycle = 9  E_corr(CCSD) = -0.219649695324559  dE = -7.9662111e-08  norm(t1,t2) = 2.0684e-05
+cycle = 10  E_corr(CCSD) = -0.219649694909004  dE = 4.15554091e-10  norm(t1,t2) = 1.94008e-05
+cycle = 11  E_corr(CCSD) = -0.219649680235687  dE = 1.46733172e-08  norm(t1,t2) = 1.91167e-05
+cycle = 12  E_corr(CCSD) = -0.219649718562258  dE = -3.83265707e-08  norm(t1,t2) = 1.88156e-05
+cycle = 13  E_corr(CCSD) = -0.219649764786808  dE = -4.62245501e-08  norm(t1,t2) = 1.71258e-05
+cycle = 14  E_corr(CCSD) = -0.219649774286985  dE = -9.50017676e-09  norm(t1,t2) = 9.52816e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.53222146317387  E_corr = -0.2196497742869848
+cycle = 1  norm(lambda1,lambda2) = 0.175984
+cycle = 2  norm(lambda1,lambda2) = 0.0233179
+cycle = 3  norm(lambda1,lambda2) = 0.00642578
+cycle = 4  norm(lambda1,lambda2) = 0.00157325
+cycle = 5  norm(lambda1,lambda2) = 0.000540423
+cycle = 6  norm(lambda1,lambda2) = 0.000190917
+cycle = 7  norm(lambda1,lambda2) = 6.6862e-05
+cycle = 8  norm(lambda1,lambda2) = 2.71981e-05
+cycle = 9  norm(lambda1,lambda2) = 1.93952e-05
+cycle = 10  norm(lambda1,lambda2) = 1.81283e-05
+cycle = 11  norm(lambda1,lambda2) = 1.78507e-05
+cycle = 12  norm(lambda1,lambda2) = 1.75878e-05
+cycle = 13  norm(lambda1,lambda2) = 1.61157e-05
+cycle = 14  norm(lambda1,lambda2) = 8.979e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0492129890     0.0000003117     0.0000031051
+1 H    -0.0492129890    -0.0000003117    -0.0000031051
+----------------------------------------------
+cycle 4: E = -99.5322214632  dE = -0.0314587  norm(grad) = 0.0695977
+
+Geometry optimization cycle 5
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.471359  -0.000023  -0.000073   -0.117709 -0.000020 -0.000017
+   H   1.471359   0.000023   0.000073    0.117709  0.000020  0.000017
+New geometry
+   1 F     -0.471359220136  -0.000022986881  -0.000073090810 AA   -0.890739832345  -0.000043438910  -0.000138121614 Bohr
+
+   2 H      1.471359220166   0.000022986881   0.000073090811 AA    2.780465956968   0.000043438910   0.000138121614 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 611 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3554656587756
+  alpha nocc = 6  HOMO = -0.747475530891092  LUMO = -0.0171458208877547
+  beta  nocc = 3  HOMO = -1.28650291332969  LUMO = -0.47673807893353
+cycle= 1 E= -99.329222132346  delta_E= 0.0262  |g|= 0.012  |ddm|= 0.0547
+  alpha nocc = 6  HOMO = -0.748300279488907  LUMO = -0.0245419716594514
+  beta  nocc = 3  HOMO = -1.3044583344591  LUMO = -0.490215314723398
+cycle= 2 E= -99.32931201451  delta_E= -8.99e-05  |g|= 0.00379  |ddm|= 0.00884
+  alpha nocc = 6  HOMO = -0.748114694599914  LUMO = -0.0244321397473803
+  beta  nocc = 3  HOMO = -1.30278021714897  LUMO = -0.487863381265744
+cycle= 3 E= -99.3293229298665  delta_E= -1.09e-05  |g|= 0.00113  |ddm|= 0.00354
+  alpha nocc = 6  HOMO = -0.748149875864791  LUMO = -0.0244461896294949
+  beta  nocc = 3  HOMO = -1.30352093708074  LUMO = -0.48831922368832
+cycle= 4 E= -99.3293237494142  delta_E= -8.2e-07  |g|= 0.000234  |ddm|= 0.000974
+  alpha nocc = 6  HOMO = -0.748172080910203  LUMO = -0.0244483628292582
+  beta  nocc = 3  HOMO = -1.30352945513323  LUMO = -0.488245249614952
+cycle= 5 E= -99.3293237841011  delta_E= -3.47e-08  |g|= 3.77e-05  |ddm|= 0.000214
+  alpha nocc = 6  HOMO = -0.748174542554765  LUMO = -0.0244491175601707
+  beta  nocc = 3  HOMO = -1.30355002872464  LUMO = -0.48825148951259
+cycle= 6 E= -99.3293237850031  delta_E= -9.02e-10  |g|= 8.02e-06  |ddm|= 3.49e-05
+  alpha nocc = 6  HOMO = -0.748174799575611  LUMO = -0.024449214605558
+  beta  nocc = 3  HOMO = -1.30355316384099  LUMO = -0.488251707490847
+cycle= 7 E= -99.3293237850632  delta_E= -6.02e-11  |g|= 1.38e-06  |ddm|= 9.81e-06
+  alpha nocc = 6  HOMO = -0.748174782479954  LUMO = -0.024449227966894
+  beta  nocc = 3  HOMO = -1.30355398668384  LUMO = -0.488251932887768
+cycle= 8 E= -99.3293237850647  delta_E= -1.44e-12  |g|= 1.78e-07  |ddm|= 1.69e-06
+  alpha nocc = 6  HOMO = -0.748174778473637  LUMO = -0.0244492257926315
+  beta  nocc = 3  HOMO = -1.3035540040174  LUMO = -0.488251919675698
+Extra cycle  E= -99.3293237850649  delta_E= -2.13e-13  |g|= 7.91e-08  |ddm|= 1.02e-07
+converged SCF energy = -99.3293237850649  <S^2> = 3.7552723  2S+1 = 4.0026353
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3648 MB)
+Init E_corr(CCSD) = -0.086153186727562
+cycle = 1  E_corr(CCSD) = -0.210224029739925  dE = -0.124070843  norm(t1,t2) = 0.167538
+cycle = 2  E_corr(CCSD) = -0.216705786507561  dE = -0.00648175677  norm(t1,t2) = 0.026443
+cycle = 3  E_corr(CCSD) = -0.218254956225866  dE = -0.00154916972  norm(t1,t2) = 0.00793155
+cycle = 4  E_corr(CCSD) = -0.218407454401643  dE = -0.000152498176  norm(t1,t2) = 0.00252671
+cycle = 5  E_corr(CCSD) = -0.218403361565855  dE = 4.09283579e-06  norm(t1,t2) = 0.000896834
+cycle = 6  E_corr(CCSD) = -0.218410919564341  dE = -7.55799849e-06  norm(t1,t2) = 0.000264235
+cycle = 7  E_corr(CCSD) = -0.218413013221875  dE = -2.09365753e-06  norm(t1,t2) = 8.11197e-05
+cycle = 8  E_corr(CCSD) = -0.218412408603868  dE = 6.04618007e-07  norm(t1,t2) = 2.19218e-05
+cycle = 9  E_corr(CCSD) = -0.218412397177698  dE = 1.14261696e-08  norm(t1,t2) = 6.55062e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.54773618224259  E_corr = -0.2184123971776984
+cycle = 1  norm(lambda1,lambda2) = 0.167141
+cycle = 2  norm(lambda1,lambda2) = 0.0245768
+cycle = 3  norm(lambda1,lambda2) = 0.00738295
+cycle = 4  norm(lambda1,lambda2) = 0.00244845
+cycle = 5  norm(lambda1,lambda2) = 0.000866316
+cycle = 6  norm(lambda1,lambda2) = 0.000250033
+cycle = 7  norm(lambda1,lambda2) = 7.87407e-05
+cycle = 8  norm(lambda1,lambda2) = 2.01382e-05
+cycle = 9  norm(lambda1,lambda2) = 6.02985e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0233535286     0.0000006119     0.0000018324
+1 H    -0.0233535286    -0.0000006119    -0.0000018324
+----------------------------------------------
+cycle 5: E = -99.5477361822  dE = -0.0155147  norm(grad) = 0.0330269
+
+Geometry optimization cycle 6
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.577661  -0.000046  -0.000111   -0.106302 -0.000023 -0.000038
+   H   1.577661   0.000046   0.000111    0.106302  0.000023  0.000038
+New geometry
+   1 F     -0.577661389093  -0.000045895365  -0.000110905206 AA   -1.091621818121  -0.000086729670  -0.000209580466 Bohr
+
+   2 H      1.577661389102   0.000045895365   0.000110905206 AA    2.981347942704   0.000086729670   0.000209580466 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 574 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3471661758609
+  alpha nocc = 6  HOMO = -0.732490359019294  LUMO = -0.011588628824933
+  beta  nocc = 3  HOMO = -1.29509788348501  LUMO = -0.481912640656661
+cycle= 1 E= -99.3366798760527  delta_E= 0.0105  |g|= 0.00654  |ddm|= 0.0315
+  alpha nocc = 6  HOMO = -0.732929627142252  LUMO = -0.0144696172796153
+  beta  nocc = 3  HOMO = -1.30292489551682  LUMO = -0.487905749283625
+cycle= 2 E= -99.3367099959534  delta_E= -3.01e-05  |g|= 0.00207  |ddm|= 0.00539
+  alpha nocc = 6  HOMO = -0.732855667948383  LUMO = -0.0144009898296769
+  beta  nocc = 3  HOMO = -1.30207898064496  LUMO = -0.486723086832154
+cycle= 3 E= -99.3367137460561  delta_E= -3.75e-06  |g|= 0.000609  |ddm|= 0.00223
+  alpha nocc = 6  HOMO = -0.73286281310979  LUMO = -0.0144040970448998
+  beta  nocc = 3  HOMO = -1.30247455679855  LUMO = -0.486975699005766
+cycle= 4 E= -99.3367140180421  delta_E= -2.72e-07  |g|= 0.000125  |ddm|= 0.000619
+  alpha nocc = 6  HOMO = -0.73287043453986  LUMO = -0.0144042915994375
+  beta  nocc = 3  HOMO = -1.30247925844471  LUMO = -0.486938796486952
+cycle= 5 E= -99.3367140290663  delta_E= -1.1e-08  |g|= 1.89e-05  |ddm|= 0.000128
+  alpha nocc = 6  HOMO = -0.732871420100547  LUMO = -0.0144045730556712
+  beta  nocc = 3  HOMO = -1.30248734740888  LUMO = -0.486940191637385
+cycle= 6 E= -99.3367140293025  delta_E= -2.36e-10  |g|= 3.92e-06  |ddm|= 1.76e-05
+  alpha nocc = 6  HOMO = -0.732871582083874  LUMO = -0.0144046455991959
+  beta  nocc = 3  HOMO = -1.30248850795043  LUMO = -0.48694005740807
+cycle= 7 E= -99.3367140293176  delta_E= -1.51e-11  |g|= 7.42e-07  |ddm|= 4.93e-06
+  alpha nocc = 6  HOMO = -0.73287157707986  LUMO = -0.0144046537464743
+  beta  nocc = 3  HOMO = -1.30248877827313  LUMO = -0.486940133540862
+Extra cycle  E= -99.3367140293181  delta_E= -5.12e-13  |g|= 3.12e-07  |ddm|= 6.63e-07
+converged SCF energy = -99.3367140293181  <S^2> = 3.7552608  2S+1 = 4.0026295
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3610 MB)
+Init E_corr(CCSD) = -0.121830027799402
+cycle = 1  E_corr(CCSD) = -0.212707028657051  dE = -0.0908770009  norm(t1,t2) = 0.133154
+cycle = 2  E_corr(CCSD) = -0.21687195429738  dE = -0.00416492564  norm(t1,t2) = 0.0190157
+cycle = 3  E_corr(CCSD) = -0.21768726520527  dE = -0.000815310908  norm(t1,t2) = 0.00417194
+cycle = 4  E_corr(CCSD) = -0.217700686721228  dE = -1.3421516e-05  norm(t1,t2) = 0.000917691
+cycle = 5  E_corr(CCSD) = -0.217688389422115  dE = 1.22972991e-05  norm(t1,t2) = 0.000277892
+cycle = 6  E_corr(CCSD) = -0.217689107445536  dE = -7.18023421e-07  norm(t1,t2) = 9.10566e-05
+cycle = 7  E_corr(CCSD) = -0.217689835106544  dE = -7.27661008e-07  norm(t1,t2) = 3.56099e-05
+cycle = 8  E_corr(CCSD) = -0.217689669870765  dE = 1.65235779e-07  norm(t1,t2) = 1.20588e-05
+cycle = 9  E_corr(CCSD) = -0.217689662166673  dE = 7.70409259e-09  norm(t1,t2) = 5.01414e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.55440369148475  E_corr = -0.2176896621666728
+cycle = 1  norm(lambda1,lambda2) = 0.132162
+cycle = 2  norm(lambda1,lambda2) = 0.0179782
+cycle = 3  norm(lambda1,lambda2) = 0.0038982
+cycle = 4  norm(lambda1,lambda2) = 0.000885977
+cycle = 5  norm(lambda1,lambda2) = 0.000263109
+cycle = 6  norm(lambda1,lambda2) = 8.47406e-05
+cycle = 7  norm(lambda1,lambda2) = 3.26101e-05
+cycle = 8  norm(lambda1,lambda2) = 1.02077e-05
+cycle = 9  norm(lambda1,lambda2) = 3.33284e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0111147552     0.0000007906     0.0000018554
+1 H    -0.0111147552    -0.0000007906    -0.0000018554
+----------------------------------------------
+cycle 6: E = -99.5544036915  dE = -0.00666751  norm(grad) = 0.0157186
+
+Geometry optimization cycle 7
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.674201  -0.000130  -0.000289   -0.096539 -0.000084 -0.000178
+   H   1.674201   0.000130   0.000289    0.096539  0.000084  0.000178
+New geometry
+   1 F     -0.674200668216  -0.000129852463  -0.000289222989 AA   -1.274054615926  -0.000245385591  -0.000546552238 Bohr
+
+   2 H      1.674200668232   0.000129852463   0.000289222989 AA    3.163780740522   0.000245385591   0.000546552238 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 573 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3435377677361
+  alpha nocc = 6  HOMO = -0.718038991353256  LUMO = -0.00526072931134265
+  beta  nocc = 3  HOMO = -1.29963642235709  LUMO = -0.484820501859709
+cycle= 1 E= -99.3399967302079  delta_E= 0.00354  |g|= 0.00374  |ddm|= 0.0198
+  alpha nocc = 6  HOMO = -0.71824337805828  LUMO = -0.00613816998126144
+  beta  nocc = 3  HOMO = -1.3030429798395  LUMO = -0.487416959797391
+cycle= 2 E= -99.3400077684758  delta_E= -1.1e-05  |g|= 0.00119  |ddm|= 0.00336
+  alpha nocc = 6  HOMO = -0.718211107771288  LUMO = -0.00609513605811034
+  beta  nocc = 3  HOMO = -1.30263678356808  LUMO = -0.486830225084572
+cycle= 3 E= -99.3400091681555  delta_E= -1.4e-06  |g|= 0.000336  |ddm|= 0.00145
+  alpha nocc = 6  HOMO = -0.718211399435019  LUMO = -0.00609500623992138
+  beta  nocc = 3  HOMO = -1.30286301402148  LUMO = -0.48698303361933
+cycle= 4 E= -99.3400092592026  delta_E= -9.1e-08  |g|= 7.05e-05  |ddm|= 0.000386
+  alpha nocc = 6  HOMO = -0.718213805075915  LUMO = -0.00609431521541084
+  beta  nocc = 3  HOMO = -1.30286764619855  LUMO = -0.486965051748884
+cycle= 5 E= -99.3400092630411  delta_E= -3.84e-09  |g|= 1.04e-05  |ddm|= 8.25e-05
+  alpha nocc = 6  HOMO = -0.718214231688017  LUMO = -0.00609437141684363
+  beta  nocc = 3  HOMO = -1.30287146942366  LUMO = -0.486965080365345
+cycle= 6 E= -99.3400092631175  delta_E= -7.64e-11  |g|= 2e-06  |ddm|= 9.37e-06
+  alpha nocc = 6  HOMO = -0.718214312116281  LUMO = -0.00609441567010013
+  beta  nocc = 3  HOMO = -1.30287198080934  LUMO = -0.486964931621847
+cycle= 7 E= -99.3400092631216  delta_E= -4.09e-12  |g|= 4.24e-07  |ddm|= 2.53e-06
+  alpha nocc = 6  HOMO = -0.718214310926568  LUMO = -0.00609442119670878
+  beta  nocc = 3  HOMO = -1.30287209933274  LUMO = -0.486964950333756
+Extra cycle  E= -99.3400092631215  delta_E= 1.14e-13  |g|= 2.2e-07  |ddm|= 4.15e-07
+converged SCF energy = -99.3400092631215  <S^2> = 3.7552641  2S+1 = 4.0026312
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3609 MB)
+Init E_corr(CCSD) = -0.110516749743446
+cycle = 1  E_corr(CCSD) = -0.210696390125468  dE = -0.10017964  norm(t1,t2) = 0.151163
+cycle = 2  E_corr(CCSD) = -0.215790851511828  dE = -0.00509446139  norm(t1,t2) = 0.0264063
+cycle = 3  E_corr(CCSD) = -0.217168423113379  dE = -0.0013775716  norm(t1,t2) = 0.00712967
+cycle = 4  E_corr(CCSD) = -0.217252834174226  dE = -8.44110608e-05  norm(t1,t2) = 0.0014719
+cycle = 5  E_corr(CCSD) = -0.217247141768701  dE = 5.69240553e-06  norm(t1,t2) = 0.000360829
+cycle = 6  E_corr(CCSD) = -0.217249454257974  dE = -2.31248927e-06  norm(t1,t2) = 0.000109188
+cycle = 7  E_corr(CCSD) = -0.217250941467774  dE = -1.4872098e-06  norm(t1,t2) = 4.63425e-05
+cycle = 8  E_corr(CCSD) = -0.217250873073929  dE = 6.83938449e-08  norm(t1,t2) = 1.53515e-05
+cycle = 9  E_corr(CCSD) = -0.217250909770157  dE = -3.66962279e-08  norm(t1,t2) = 4.79819e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.55726017289162  E_corr = -0.2172509097701572
+cycle = 1  norm(lambda1,lambda2) = 0.150499
+cycle = 2  norm(lambda1,lambda2) = 0.0247599
+cycle = 3  norm(lambda1,lambda2) = 0.00666212
+cycle = 4  norm(lambda1,lambda2) = 0.00144217
+cycle = 5  norm(lambda1,lambda2) = 0.000350458
+cycle = 6  norm(lambda1,lambda2) = 0.000107853
+cycle = 7  norm(lambda1,lambda2) = 4.5325e-05
+cycle = 8  norm(lambda1,lambda2) = 1.4304e-05
+cycle = 9  norm(lambda1,lambda2) = 4.95032e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0051457528     0.0000006519     0.0000014427
+1 H    -0.0051457528    -0.0000006519    -0.0000014427
+----------------------------------------------
+cycle 7: E = -99.5572601729  dE = -0.00285648  norm(grad) = 0.00727719
+
+Geometry optimization cycle 8
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.757425  -0.000201  -0.000436   -0.083224 -0.000071 -0.000146
+   H   1.757425   0.000201   0.000436    0.083224  0.000071  0.000146
+New geometry
+   1 F     -0.757425153446  -0.000200663847  -0.000435583205 AA   -1.431326099870  -0.000379199714  -0.000823132962 Bohr
+
+   2 H      1.757425153465   0.000200663847   0.000435583205 AA    3.321052224471   0.000379199714   0.000823132962 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 572 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3420085886538
+  alpha nocc = 6  HOMO = -0.705896328995244  LUMO = 0.000108385097301791
+  beta  nocc = 3  HOMO = -1.3022727701748  LUMO = -0.486586346467826
+cycle= 1 E= -99.3413930491224  delta_E= 0.000616  |g|= 0.00218  |ddm|= 0.0128
+  alpha nocc = 6  HOMO = -0.705980215288731  LUMO = 5.4211793512989e-05
+  beta  nocc = 3  HOMO = -1.30370380679595  LUMO = -0.48764954369414
+cycle= 2 E= -99.3413971655773  delta_E= -4.12e-06  |g|= 0.000698  |ddm|= 0.0021
+  alpha nocc = 6  HOMO = -0.705964122665425  LUMO = 7.75136706434177e-05
+  beta  nocc = 3  HOMO = -1.30353206330138  LUMO = -0.487377596114606
+cycle= 3 E= -99.3413977028096  delta_E= -5.37e-07  |g|= 0.000183  |ddm|= 0.000952
+  alpha nocc = 6  HOMO = -0.705962894603755  LUMO = 7.73739993923096e-05
+  beta  nocc = 3  HOMO = -1.30366740846964  LUMO = -0.487476221001388
+cycle= 4 E= -99.341397730628  delta_E= -2.78e-08  |g|= 3.76e-05  |ddm|= 0.000226
+  alpha nocc = 6  HOMO = -0.70596340242377  LUMO = 7.80403206447277e-05
+  beta  nocc = 3  HOMO = -1.30367157304981  LUMO = -0.487468923561709
+cycle= 5 E= -99.3413977317579  delta_E= -1.13e-09  |g|= 5.91e-06  |ddm|= 4.86e-05
+  alpha nocc = 6  HOMO = -0.705963564141632  LUMO = 7.80840527853748e-05
+  beta  nocc = 3  HOMO = -1.30367402077096  LUMO = -0.487468956176372
+cycle= 6 E= -99.3413977317805  delta_E= -2.26e-11  |g|= 1.07e-06  |ddm|= 5.13e-06
+  alpha nocc = 6  HOMO = -0.705963597374208  LUMO = 7.80640561572904e-05
+  beta  nocc = 3  HOMO = -1.30367438362669  LUMO = -0.487468900851198
+cycle= 7 E= -99.3413977317817  delta_E= -1.19e-12  |g|= 2.94e-07  |ddm|= 1.19e-06
+  alpha nocc = 6  HOMO = -0.70596359688774  LUMO = 7.80615842052882e-05
+  beta  nocc = 3  HOMO = -1.30367443168006  LUMO = -0.487468899186218
+Extra cycle  E= -99.3413977317819  delta_E= -1.99e-13  |g|= 2.28e-07  |ddm|= 2.51e-07
+converged SCF energy = -99.3413977317819  <S^2> = 3.7552719  2S+1 = 4.0026351
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3609 MB)
+Init E_corr(CCSD) = -0.115517955492655
+cycle = 1  E_corr(CCSD) = -0.20952322554924  dE = -0.0940052701  norm(t1,t2) = 0.152771
+cycle = 2  E_corr(CCSD) = -0.215208185372569  dE = -0.00568495982  norm(t1,t2) = 0.0272499
+cycle = 3  E_corr(CCSD) = -0.216818577347715  dE = -0.00161039198  norm(t1,t2) = 0.00771336
+cycle = 4  E_corr(CCSD) = -0.216967128172903  dE = -0.000148550825  norm(t1,t2) = 0.00182613
+cycle = 5  E_corr(CCSD) = -0.216982082322251  dE = -1.49541493e-05  norm(t1,t2) = 0.000663019
+cycle = 6  E_corr(CCSD) = -0.216989137732935  dE = -7.05541068e-06  norm(t1,t2) = 0.000220528
+cycle = 7  E_corr(CCSD) = -0.216990052332581  dE = -9.14599645e-07  norm(t1,t2) = 6.68638e-05
+cycle = 8  E_corr(CCSD) = -0.21698959041371  dE = 4.61918871e-07  norm(t1,t2) = 2.17983e-05
+cycle = 9  E_corr(CCSD) = -0.216989617949611  dE = -2.75359015e-08  norm(t1,t2) = 7.68717e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.5583873497315  E_corr = -0.2169896179496111
+cycle = 1  norm(lambda1,lambda2) = 0.152273
+cycle = 2  norm(lambda1,lambda2) = 0.0255344
+cycle = 3  norm(lambda1,lambda2) = 0.0072334
+cycle = 4  norm(lambda1,lambda2) = 0.00178889
+cycle = 5  norm(lambda1,lambda2) = 0.00064747
+cycle = 6  norm(lambda1,lambda2) = 0.000210872
+cycle = 7  norm(lambda1,lambda2) = 6.56523e-05
+cycle = 8  norm(lambda1,lambda2) = 2.0792e-05
+cycle = 9  norm(lambda1,lambda2) = 7.82393e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0022866556     0.0000004162     0.0000008659
+1 H    -0.0022866556    -0.0000004162    -0.0000008659
+----------------------------------------------
+cycle 8: E = -99.5583873497  dE = -0.00112718  norm(grad) = 0.00323382
+
+Geometry optimization cycle 9
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.823987  -0.000267  -0.000565   -0.066561 -0.000067 -0.000129
+   H   1.823987   0.000267   0.000565    0.066561  0.000067  0.000129
+New geometry
+   1 F     -0.823986618510  -0.000267460285  -0.000564890936 AA   -1.557109039290  -0.000505426687  -0.001067489160 Bohr
+
+   2 H      1.823986618513   0.000267460285   0.000564890936 AA    3.446835163862   0.000505426688   0.001067489160 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 567 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3415866911843
+  alpha nocc = 6  HOMO = -0.696662029522354  LUMO = 0.00393475860969629
+  beta  nocc = 3  HOMO = -1.30381719523461  LUMO = -0.487659278354234
+cycle= 1 E= -99.3419399992161  delta_E= -0.000353  |g|= 0.0013  |ddm|= 0.00841
+  alpha nocc = 6  HOMO = -0.696692979128625  LUMO = 0.0041252254707116
+  beta  nocc = 3  HOMO = -1.30441505126224  LUMO = -0.488082962996495
+cycle= 2 E= -99.3419416171652  delta_E= -1.62e-06  |g|= 0.00043  |ddm|= 0.00136
+  alpha nocc = 6  HOMO = -0.69668397083481  LUMO = 0.00413362993338132
+  beta  nocc = 3  HOMO = -1.30435900841151  LUMO = -0.487969198933009
+cycle= 3 E= -99.3419418437127  delta_E= -2.27e-07  |g|= 9.92e-05  |ddm|= 0.000653
+  alpha nocc = 6  HOMO = -0.69668277203102  LUMO = 0.00413241142163149
+  beta  nocc = 3  HOMO = -1.30444218996137  LUMO = -0.488034666330236
+cycle= 4 E= -99.3419418518664  delta_E= -8.15e-09  |g|= 1.88e-05  |ddm|= 0.000125
+  alpha nocc = 6  HOMO = -0.696682750612081  LUMO = 0.00413268504217137
+  beta  nocc = 3  HOMO = -1.30444432839709  LUMO = -0.488031710939093
+cycle= 5 E= -99.3419418521486  delta_E= -2.82e-10  |g|= 3.13e-06  |ddm|= 2.43e-05
+  alpha nocc = 6  HOMO = -0.696682790374569  LUMO = 0.00413270434514657
+  beta  nocc = 3  HOMO = -1.30444596282117  LUMO = -0.488032014558805
+cycle= 6 E= -99.3419418521551  delta_E= -6.54e-12  |g|= 6.22e-07  |ddm|= 3.14e-06
+  alpha nocc = 6  HOMO = -0.69668279708356  LUMO = 0.00413269465540122
+  beta  nocc = 3  HOMO = -1.30444614092635  LUMO = -0.488032026244289
+Extra cycle  E= -99.3419418521555  delta_E= -3.98e-13  |g|= 3.46e-07  |ddm|= 4.67e-07
+converged SCF energy = -99.3419418521555  <S^2> = 3.7552795  2S+1 = 4.0026389
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3603 MB)
+Init E_corr(CCSD) = -0.176302016763623
+cycle = 1  E_corr(CCSD) = -0.214800497419498  dE = -0.0384984807  norm(t1,t2) = 0.091385
+cycle = 2  E_corr(CCSD) = -0.21631391993239  dE = -0.00151342251  norm(t1,t2) = 0.0163075
+cycle = 3  E_corr(CCSD) = -0.216796796215577  dE = -0.000482876283  norm(t1,t2) = 0.00454994
+cycle = 4  E_corr(CCSD) = -0.216833184870898  dE = -3.63886553e-05  norm(t1,t2) = 0.00086944
+cycle = 5  E_corr(CCSD) = -0.216835355673077  dE = -2.17080218e-06  norm(t1,t2) = 0.000201616
+cycle = 6  E_corr(CCSD) = -0.216836790217484  dE = -1.43454441e-06  norm(t1,t2) = 6.36027e-05
+cycle = 7  E_corr(CCSD) = -0.216837148770098  dE = -3.58552614e-07  norm(t1,t2) = 2.45104e-05
+cycle = 8  E_corr(CCSD) = -0.21683712787768  dE = 2.08924188e-08  norm(t1,t2) = 6.75414e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.55877898003317  E_corr = -0.2168371278776796
+cycle = 1  norm(lambda1,lambda2) = 0.0904346
+cycle = 2  norm(lambda1,lambda2) = 0.0155586
+cycle = 3  norm(lambda1,lambda2) = 0.00435999
+cycle = 4  norm(lambda1,lambda2) = 0.000845815
+cycle = 5  norm(lambda1,lambda2) = 0.000196874
+cycle = 6  norm(lambda1,lambda2) = 6.24646e-05
+cycle = 7  norm(lambda1,lambda2) = 2.44763e-05
+cycle = 8  norm(lambda1,lambda2) = 7.33152e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0009359484     0.0000002069     0.0000004633
+1 H    -0.0009359484    -0.0000002069    -0.0000004633
+----------------------------------------------
+cycle 9: E = -99.55877898  dE = -0.00039163  norm(grad) = 0.00132363
+
+Geometry optimization cycle 10
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.870109  -0.000317  -0.000670   -0.046123 -0.000049 -0.000105
+   H   1.870109   0.000317   0.000670    0.046123  0.000049  0.000105
+New geometry
+   1 F     -0.870109190770  -0.000316522982  -0.000669928116 AA   -1.644268069022  -0.000598141748  -0.001265980663 Bohr
+
+   2 H      1.870109190750   0.000316522982   0.000669928116 AA    3.533994193550   0.000598141748   0.001265980663 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 577 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3416518490282
+  alpha nocc = 6  HOMO = -0.690567475125323  LUMO = 0.00622269580025898
+  beta  nocc = 3  HOMO = -1.30471154527598  LUMO = -0.488295487590847
+cycle= 1 E= -99.3421311396915  delta_E= -0.000479  |g|= 0.00076  |ddm|= 0.00517
+  alpha nocc = 6  HOMO = -0.690576843073561  LUMO = 0.00641205076765525
+  beta  nocc = 3  HOMO = -1.30495774280165  LUMO = -0.488460527268181
+cycle= 2 E= -99.3421317409063  delta_E= -6.01e-07  |g|= 0.00026  |ddm|= 0.000866
+  alpha nocc = 6  HOMO = -0.69057174284377  LUMO = 0.00641186243555095
+  beta  nocc = 3  HOMO = -1.30495126575101  LUMO = -0.488421910167192
+cycle= 3 E= -99.3421318327836  delta_E= -9.19e-08  |g|= 5.18e-05  |ddm|= 0.000438
+  alpha nocc = 6  HOMO = -0.690570942373575  LUMO = 0.00641046341675163
+  beta  nocc = 3  HOMO = -1.30499845878769  LUMO = -0.488461167586641
+cycle= 4 E= -99.3421318349673  delta_E= -2.18e-09  |g|= 9.14e-06  |ddm|= 6.33e-05
+  alpha nocc = 6  HOMO = -0.690570849585608  LUMO = 0.00641051913980714
+  beta  nocc = 3  HOMO = -1.30499886857501  LUMO = -0.48845955456487
+cycle= 5 E= -99.3421318350377  delta_E= -7.04e-11  |g|= 1.59e-06  |ddm|= 1.08e-05
+  alpha nocc = 6  HOMO = -0.690570853551434  LUMO = 0.00641050260600682
+  beta  nocc = 3  HOMO = -1.3049997602097  LUMO = -0.488459844293537
+cycle= 6 E= -99.3421318350402  delta_E= -2.52e-12  |g|= 3.92e-07  |ddm|= 2.09e-06
+  alpha nocc = 6  HOMO = -0.690570854958607  LUMO = 0.00641049532162174
+  beta  nocc = 3  HOMO = -1.30499985555598  LUMO = -0.488459864796164
+Extra cycle  E= -99.3421318350404  delta_E= -1.56e-13  |g|= 2.81e-07  |ddm|= 3.34e-07
+converged SCF energy = -99.3421318350404  <S^2> = 3.7552847  2S+1 = 4.0026415
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3614 MB)
+Init E_corr(CCSD) = -0.167172238742059
+cycle = 1  E_corr(CCSD) = -0.214422390698698  dE = -0.047250152  norm(t1,t2) = 0.103682
+cycle = 2  E_corr(CCSD) = -0.216200830531709  dE = -0.00177843983  norm(t1,t2) = 0.0187625
+cycle = 3  E_corr(CCSD) = -0.216701363749694  dE = -0.000500533218  norm(t1,t2) = 0.00498768
+cycle = 4  E_corr(CCSD) = -0.216750919691726  dE = -4.9555942e-05  norm(t1,t2) = 0.000976005
+cycle = 5  E_corr(CCSD) = -0.216752963650224  dE = -2.0439585e-06  norm(t1,t2) = 0.000185472
+cycle = 6  E_corr(CCSD) = -0.216753916041562  dE = -9.52391337e-07  norm(t1,t2) = 4.03521e-05
+cycle = 7  E_corr(CCSD) = -0.216754240525311  dE = -3.2448375e-07  norm(t1,t2) = 1.48124e-05
+cycle = 8  E_corr(CCSD) = -0.216754163142042  dE = 7.73832689e-08  norm(t1,t2) = 5.2203e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.55888599818242  E_corr = -0.2167541631420425
+cycle = 1  norm(lambda1,lambda2) = 0.102822
+cycle = 2  norm(lambda1,lambda2) = 0.0177258
+cycle = 3  norm(lambda1,lambda2) = 0.00475027
+cycle = 4  norm(lambda1,lambda2) = 0.000950488
+cycle = 5  norm(lambda1,lambda2) = 0.000178729
+cycle = 6  norm(lambda1,lambda2) = 4.02122e-05
+cycle = 7  norm(lambda1,lambda2) = 1.53856e-05
+cycle = 8  norm(lambda1,lambda2) = 6.00984e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0003285199     0.0000000826     0.0000002171
+1 H    -0.0003285199    -0.0000000826    -0.0000002171
+----------------------------------------------
+cycle 10: E = -99.5588859982  dE = -0.000107018  norm(grad) = 0.000464597
+
+Geometry optimization cycle 11
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.895054  -0.000344  -0.000737   -0.024945 -0.000027 -0.000067
+   H   1.895054   0.000344   0.000737    0.024945  0.000027  0.000067
+New geometry
+   1 F     -0.895054001587  -0.000343928916  -0.000736801500 AA   -1.691406929696  -0.000649931457  -0.001392353044 Bohr
+
+   2 H      1.895054001534   0.000343928916   0.000736801500 AA    3.581133054160   0.000649931457   0.001392353044 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 577 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3418832439559
+  alpha nocc = 6  HOMO = -0.687380581054389  LUMO = 0.007344387676624
+  beta  nocc = 3  HOMO = -1.30517471189843  LUMO = -0.488626460989672
+cycle= 1 E= -99.342189200968  delta_E= -0.000306  |g|= 0.000379  |ddm|= 0.00263
+  alpha nocc = 6  HOMO = -0.687382265032263  LUMO = 0.00745545479767898
+  beta  nocc = 3  HOMO = -1.30526900500173  LUMO = -0.488686944042362
+cycle= 2 E= -99.3421893598982  delta_E= -1.59e-07  |g|= 0.000134  |ddm|= 0.000463
+  alpha nocc = 6  HOMO = -0.687379740702023  LUMO = 0.00745325387050962
+  beta  nocc = 3  HOMO = -1.30527498485376  LUMO = -0.488677610671077
+cycle= 3 E= -99.3421893856708  delta_E= -2.58e-08  |g|= 2.35e-05  |ddm|= 0.000241
+  alpha nocc = 6  HOMO = -0.68737933482576  LUMO = 0.007452410298919
+  beta  nocc = 3  HOMO = -1.30529706020622  LUMO = -0.488696530455304
+cycle= 4 E= -99.3421893861114  delta_E= -4.41e-10  |g|= 4.09e-06  |ddm|= 2.71e-05
+  alpha nocc = 6  HOMO = -0.687379276162851  LUMO = 0.00745241589754531
+  beta  nocc = 3  HOMO = -1.3052969007824  LUMO = -0.488695643243396
+cycle= 5 E= -99.3421893861263  delta_E= -1.49e-11  |g|= 7.85e-07  |ddm|= 4.56e-06
+  alpha nocc = 6  HOMO = -0.687379276109212  LUMO = 0.00745240440819158
+  beta  nocc = 3  HOMO = -1.30529716581535  LUMO = -0.48869574913423
+Extra cycle  E= -99.3421893861273  delta_E= -9.52e-13  |g|= 3.97e-07  |ddm|= 9.04e-07
+converged SCF energy = -99.3421893861273  <S^2> = 3.7552875  2S+1 = 4.0026429
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3614 MB)
+Init E_corr(CCSD) = -0.182719513391526
+cycle = 1  E_corr(CCSD) = -0.215688742001257  dE = -0.0329692286  norm(t1,t2) = 0.0681431
+cycle = 2  E_corr(CCSD) = -0.2165241634871  dE = -0.000835421486  norm(t1,t2) = 0.00974906
+cycle = 3  E_corr(CCSD) = -0.216722543112646  dE = -0.000198379626  norm(t1,t2) = 0.00181904
+cycle = 4  E_corr(CCSD) = -0.216720618071024  dE = 1.92504162e-06  norm(t1,t2) = 0.000365349
+cycle = 5  E_corr(CCSD) = -0.216716641275287  dE = 3.97679574e-06  norm(t1,t2) = 8.4499e-05
+cycle = 6  E_corr(CCSD) = -0.216716224959753  dE = 4.16315535e-07  norm(t1,t2) = 2.39626e-05
+cycle = 7  E_corr(CCSD) = -0.216715866246972  dE = 3.58712781e-07  norm(t1,t2) = 9.90382e-06
+cycle = 8  E_corr(CCSD) = -0.21671569085846  dE = 1.75388512e-07  norm(t1,t2) = 3.35404e-06
+cycle = 9  E_corr(CCSD) = -0.216715672100255  dE = 1.87582051e-08  norm(t1,t2) = 1.71639e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.55890505822754  E_corr = -0.2167156721002548
+cycle = 1  norm(lambda1,lambda2) = 0.0672429
+cycle = 2  norm(lambda1,lambda2) = 0.00936422
+cycle = 3  norm(lambda1,lambda2) = 0.0017471
+cycle = 4  norm(lambda1,lambda2) = 0.000353796
+cycle = 5  norm(lambda1,lambda2) = 7.87592e-05
+cycle = 6  norm(lambda1,lambda2) = 2.05892e-05
+cycle = 7  norm(lambda1,lambda2) = 8.83716e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0000843378     0.0000000252     0.0000000997
+1 H    -0.0000843378    -0.0000000252    -0.0000000997
+----------------------------------------------
+cycle 11: E = -99.5589050582  dE = -1.906e-05  norm(grad) = 0.000119272
+
+Geometry optimization cycle 12
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.903670  -0.000354  -0.000769   -0.008616 -0.000010 -0.000033
+   H   1.903670   0.000354   0.000769    0.008616  0.000010  0.000033
+New geometry
+   1 F     -0.903669665795  -0.000354125297  -0.000769320305 AA   -1.707688175429  -0.000669199825  -0.001453804679 Bohr
+
+   2 H      1.903669665702   0.000354125297   0.000769320305 AA    3.597414299818   0.000669199825   0.001453804679 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 565 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3420916224649
+  alpha nocc = 6  HOMO = -0.686296803516693  LUMO = 0.00774360030695428
+  beta  nocc = 3  HOMO = -1.30536108443177  LUMO = -0.488755872974216
+cycle= 1 E= -99.3422032742599  delta_E= -0.000112  |g|= 0.000127  |ddm|= 0.000888
+  alpha nocc = 6  HOMO = -0.686296733645698  LUMO = 0.00778264900217202
+  beta  nocc = 3  HOMO = -1.30538844046584  LUMO = -0.488772963020599
+cycle= 2 E= -99.3422032926226  delta_E= -1.84e-08  |g|= 4.53e-05  |ddm|= 0.00016
+  alpha nocc = 6  HOMO = -0.686295879604657  LUMO = 0.00778157342792022
+  beta  nocc = 3  HOMO = -1.30539205262185  LUMO = -0.488771549314489
+cycle= 3 E= -99.3422032956813  delta_E= -3.06e-09  |g|= 7.43e-06  |ddm|= 8.43e-05
+  alpha nocc = 6  HOMO = -0.686295745077073  LUMO = 0.00778128355632475
+  beta  nocc = 3  HOMO = -1.30539910836509  LUMO = -0.488777667966787
+cycle= 4 E= -99.3422032957255  delta_E= -4.42e-11  |g|= 1.33e-06  |ddm|= 8.27e-06
+  alpha nocc = 6  HOMO = -0.686295724485413  LUMO = 0.00778128405204311
+  beta  nocc = 3  HOMO = -1.30539899228695  LUMO = -0.488777347529668
+cycle= 5 E= -99.3422032957273  delta_E= -1.8e-12  |g|= 3.57e-07  |ddm|= 1.46e-06
+  alpha nocc = 6  HOMO = -0.686295724021894  LUMO = 0.00778127946125298
+  beta  nocc = 3  HOMO = -1.30539907462545  LUMO = -0.488777383501744
+Extra cycle  E= -99.3422032957274  delta_E= -8.53e-14  |g|= 2.78e-07  |ddm|= 3.57e-07
+converged SCF energy = -99.3422032957274  <S^2> = 3.7552884  2S+1 = 4.0026433
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3602 MB)
+Init E_corr(CCSD) = -0.193165159093445
+cycle = 1  E_corr(CCSD) = -0.215961006687148  dE = -0.0227958476  norm(t1,t2) = 0.0663675
+cycle = 2  E_corr(CCSD) = -0.216565625598233  dE = -0.000604618911  norm(t1,t2) = 0.0114145
+cycle = 3  E_corr(CCSD) = -0.216697092522258  dE = -0.000131466924  norm(t1,t2) = 0.00229229
+cycle = 4  E_corr(CCSD) = -0.216704841851761  dE = -7.7493295e-06  norm(t1,t2) = 0.000417009
+cycle = 5  E_corr(CCSD) = -0.216703591153917  dE = 1.25069784e-06  norm(t1,t2) = 7.93998e-05
+cycle = 6  E_corr(CCSD) = -0.21670361570474  dE = -2.45508228e-08  norm(t1,t2) = 1.80354e-05
+cycle = 7  E_corr(CCSD) = -0.216703454632361  dE = 1.61072379e-07  norm(t1,t2) = 5.46568e-06
+cycle = 8  E_corr(CCSD) = -0.216703338283404  dE = 1.16348956e-07  norm(t1,t2) = 2.36086e-06
+cycle = 9  E_corr(CCSD) = -0.216703316198932  dE = 2.20844728e-08  norm(t1,t2) = 1.65516e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.55890661192632  E_corr = -0.2167033161989317
+cycle = 1  norm(lambda1,lambda2) = 0.0656091
+cycle = 2  norm(lambda1,lambda2) = 0.0106768
+cycle = 3  norm(lambda1,lambda2) = 0.00217472
+cycle = 4  norm(lambda1,lambda2) = 0.000396765
+cycle = 5  norm(lambda1,lambda2) = 7.49431e-05
+cycle = 6  norm(lambda1,lambda2) = 1.62536e-05
+cycle = 7  norm(lambda1,lambda2) = 5.22846e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0000116166     0.0000000074     0.0000000623
+1 H    -0.0000116166    -0.0000000074    -0.0000000623
+----------------------------------------------
+cycle 12: E = -99.5589066119  dE = -1.5537e-06  norm(grad) = 1.64286e-05
+
+Geometry optimization cycle 13
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.905046  -0.000357  -0.000784   -0.001376 -0.000002 -0.000015
+   H   1.905046   0.000357   0.000784    0.001376  0.000002  0.000015
+New geometry
+   1 F     -0.905045970070  -0.000356501713  -0.000783897474 AA   -1.710289013573  -0.000673690601  -0.001481351535 Bohr
+
+   2 H      1.905045969975   0.000356501713   0.000783897474 AA    3.600015137960   0.000673690601   0.001481351535 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 559 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3421871089941
+  alpha nocc = 6  HOMO = -0.686123741699909  LUMO = 0.00782631970159934
+  beta  nocc = 3  HOMO = -1.30540944577928  LUMO = -0.488787100518022
+cycle= 1 E= -99.3422052591491  delta_E= -1.82e-05  |g|= 2.01e-05  |ddm|= 0.000141
+  alpha nocc = 6  HOMO = -0.686123687532814  LUMO = 0.00783258336110626
+  beta  nocc = 3  HOMO = -1.30541357449582  LUMO = -0.488789652481279
+cycle= 2 E= -99.3422052596143  delta_E= -4.65e-10  |g|= 7.22e-06  |ddm|= 2.57e-05
+  alpha nocc = 6  HOMO = -0.686123550983656  LUMO = 0.00783239836531681
+  beta  nocc = 3  HOMO = -1.30541423476345  LUMO = -0.488789518505729
+cycle= 3 E= -99.3422052596924  delta_E= -7.82e-11  |g|= 1.18e-06  |ddm|= 1.35e-05
+  alpha nocc = 6  HOMO = -0.686123529793184  LUMO = 0.00783235266433431
+  beta  nocc = 3  HOMO = -1.30541533417115  LUMO = -0.488790474656331
+cycle= 4 E= -99.3422052596936  delta_E= -1.17e-12  |g|= 3.32e-07  |ddm|= 1.28e-06
+  alpha nocc = 6  HOMO = -0.686123527606934  LUMO = 0.0078323544908043
+  beta  nocc = 3  HOMO = -1.30541527595886  LUMO = -0.488790393689077
+Extra cycle  E= -99.3422052596936  delta_E=    0  |g|= 2.71e-07  |ddm|= 2.37e-07
+converged SCF energy = -99.3422052596936  <S^2> = 3.7552885  2S+1 = 4.0026434
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3595 MB)
+Init E_corr(CCSD) = -0.193006088625355
+cycle = 1  E_corr(CCSD) = -0.215456910734085  dE = -0.0224508221  norm(t1,t2) = 0.06904
+cycle = 2  E_corr(CCSD) = -0.216352070425301  dE = -0.000895159691  norm(t1,t2) = 0.0135537
+cycle = 3  E_corr(CCSD) = -0.216689112696023  dE = -0.000337042271  norm(t1,t2) = 0.00425223
+cycle = 4  E_corr(CCSD) = -0.216700318759017  dE = -1.1206063e-05  norm(t1,t2) = 0.000479194
+cycle = 5  E_corr(CCSD) = -0.216702182982623  dE = -1.86422361e-06  norm(t1,t2) = 3.74739e-05
+cycle = 6  E_corr(CCSD) = -0.216701701024255  dE = 4.81958368e-07  norm(t1,t2) = 1.15969e-05
+cycle = 7  E_corr(CCSD) = -0.216701433769511  dE = 2.67254744e-07  norm(t1,t2) = 4.12414e-06
+cycle = 8  E_corr(CCSD) = -0.216701390773856  dE = 4.29956548e-08  norm(t1,t2) = 1.91511e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.55890665046743  E_corr = -0.2167013907738559
+cycle = 1  norm(lambda1,lambda2) = 0.0682561
+cycle = 2  norm(lambda1,lambda2) = 0.0130944
+cycle = 3  norm(lambda1,lambda2) = 0.00411266
+cycle = 4  norm(lambda1,lambda2) = 0.00046158
+cycle = 5  norm(lambda1,lambda2) = 3.52165e-05
+cycle = 6  norm(lambda1,lambda2) = 1.06645e-05
+cycle = 7  norm(lambda1,lambda2) = 4.13952e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0000005132     0.0000000049     0.0000000572
+1 H    -0.0000005132    -0.0000000049    -0.0000000572
+----------------------------------------------
+cycle 13: E = -99.5589066505  dE = -3.85411e-08  norm(grad) = 7.30332e-07
+
+Geometry optimization cycle 14
+Cartesian coordinates (Angstrom)
+ Atom        New coordinates             dX        dY        dZ
+   F  -0.905110  -0.000357  -0.000794   -0.000064 -0.000001 -0.000010
+   H   1.905110   0.000357   0.000794    0.000064  0.000001  0.000010
+New geometry
+   1 F     -0.905109656376  -0.000357414383  -0.000794102355 AA   -1.710409363249  -0.000675415297  -0.001500635967 Bohr
+
+   2 H      1.905109656271   0.000357414383   0.000794102355 AA    3.600135487617   0.000675415297   0.001500635967 Bohr
+
+
+
+******** <class 'pyscf.scf.hf.as_scanner.<locals>.SCF_Scanner'> ********
+method = SCF_Scanner-UHF
+initial guess = minao
+damping factor = 0
+level_shift factor = 0
+DIIS = <class 'pyscf.scf.diis.CDIIS'>
+diis_start_cycle = 1
+diis_space = 16
+SCF conv_tol = 1e-09
+SCF conv_tol_grad = 1e-06
+SCF max_cycles = 200
+direct_scf = True
+direct_scf_tol = 1e-13
+max_memory 48000 MB (current use 487 MB)
+number electrons alpha = 6  beta = 3
+init E= -99.3422045064746
+  alpha nocc = 6  HOMO = -0.686115574281777  LUMO = 0.00783442701695696
+  beta  nocc = 3  HOMO = -1.30541580107007  LUMO = -0.488790877397043
+cycle= 1 E= -99.3422053489091  delta_E= -8.42e-07  |g|= 9.8e-07  |ddm|= 6.53e-06
+  alpha nocc = 6  HOMO = -0.686115571135525  LUMO = 0.00783471660134809
+  beta  nocc = 3  HOMO = -1.30541599434699  LUMO = -0.488790993791339
+cycle= 2 E= -99.3422053489103  delta_E= -1.18e-12  |g|= 4.33e-07  |ddm|= 1.21e-06
+  alpha nocc = 6  HOMO = -0.686115566750164  LUMO = 0.00783471044063347
+  beta  nocc = 3  HOMO = -1.30541602018007  LUMO = -0.488790992856645
+Extra cycle  E= -99.3422053489107  delta_E= -4.55e-13  |g|= 2.97e-07  |ddm|= 4.52e-07
+converged SCF energy = -99.3422053489107  <S^2> = 3.7552885  2S+1 = 4.0026434
+
+******** <class 'pyscf.cc.ccsd.as_scanner.<locals>.CCSD_Scanner'> ********
+CC2 = 0
+CCSD nocc = (6, 3), nmo = (146, 146)
+max_cycle = 200
+direct = 0
+conv_tol = 1e-07
+conv_tol_normt = 1e-05
+diis_space = 12
+diis_start_cycle = 0
+diis_start_energy_diff = 1e+09
+max_memory 48000 MB (current use 3557 MB)
+Init E_corr(CCSD) = -0.163358506314791
+cycle = 1  E_corr(CCSD) = -0.213783619848449  dE = -0.0504251135  norm(t1,t2) = 0.0988376
+cycle = 2  E_corr(CCSD) = -0.216069663340755  dE = -0.00228604349  norm(t1,t2) = 0.0187819
+cycle = 3  E_corr(CCSD) = -0.216723885518674  dE = -0.000654222178  norm(t1,t2) = 0.00554414
+cycle = 4  E_corr(CCSD) = -0.216702262830805  dE = 2.16226879e-05  norm(t1,t2) = 0.000731164
+cycle = 5  E_corr(CCSD) = -0.216702928752072  dE = -6.65921267e-07  norm(t1,t2) = 0.00010099
+cycle = 6  E_corr(CCSD) = -0.216702255334578  dE = 6.73417494e-07  norm(t1,t2) = 2.53265e-05
+cycle = 7  E_corr(CCSD) = -0.216701388291097  dE = 8.67043481e-07  norm(t1,t2) = 9.16382e-06
+cycle = 8  E_corr(CCSD) = -0.216701275952692  dE = 1.12338405e-07  norm(t1,t2) = 3.00493e-06
+cycle = 9  E_corr(CCSD) = -0.216701285352575  dE = -9.39988307e-09  norm(t1,t2) = 1.67773e-06
+CCSD_Scanner converged
+E(CCSD_Scanner) = -99.55890663426327  E_corr = -0.2167012853525749
+cycle = 1  norm(lambda1,lambda2) = 0.0981438
+cycle = 2  norm(lambda1,lambda2) = 0.0178908
+cycle = 3  norm(lambda1,lambda2) = 0.00527398
+cycle = 4  norm(lambda1,lambda2) = 0.000709152
+cycle = 5  norm(lambda1,lambda2) = 0.00010627
+cycle = 6  norm(lambda1,lambda2) = 2.04489e-05
+cycle = 7  norm(lambda1,lambda2) = 6.94081e-06
+--------------- CCSD_Scanner gradients ---------------
+         x                y                z
+0 F     0.0000000014     0.0000000055     0.0000000584
+1 H    -0.0000000014    -0.0000000055    -0.0000000584
+----------------------------------------------
+cycle 14: E = -99.5589066343  dE = 1.62042e-08  norm(grad) = 8.29475e-08
