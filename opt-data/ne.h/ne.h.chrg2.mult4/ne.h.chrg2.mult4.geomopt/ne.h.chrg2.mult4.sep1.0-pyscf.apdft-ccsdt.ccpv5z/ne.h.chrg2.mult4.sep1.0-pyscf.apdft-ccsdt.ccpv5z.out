@@ -1,0 +1,193 @@
+-=#  geomeTRIC started. Version: 0.9.7.2  #=-
+geometric-optimize called with the following command line:
+apdft-pyscf-calc.py
+6 internal coordinates being used (instead of 6 Cartesians)
+Internal coordinate system (atoms numbered from 1):
+Distance 1-2
+Translation-X 1-2
+Translation-Y 1-2
+Translation-Z 1-2
+Rotation-A 1-2
+Rotation-B 1-2
+Rotation-C 1-2
+<class 'geometric.internal.Distance'> : 1
+<class 'geometric.internal.TranslationX'> : 1
+<class 'geometric.internal.TranslationY'> : 1
+<class 'geometric.internal.TranslationZ'> : 1
+<class 'geometric.internal.RotationA'> : 1
+<class 'geometric.internal.RotationB'> : 1
+<class 'geometric.internal.RotationC'> : 1
+WARN: system HOMO 0.0172792606190541 >= system LUMO -0.813743815695099
+WARN: system HOMO -0.787996978679678 >= system LUMO -2.07240376315991
+WARN: system HOMO -0.565679501683045 >= system LUMO -1.44190090942177
+WARN: system HOMO -0.521244371780079 >= system LUMO -1.39545965282544
+WARN: system HOMO -0.518225391073455 >= system LUMO -1.39536991340698
+WARN: system HOMO -0.516577601282316 >= system LUMO -1.39413870982049
+WARN: system HOMO -0.51660374254341 >= system LUMO -1.39412641156118
+WARN: system HOMO -0.516631685322833 >= system LUMO -1.39419710305524
+WARN: system HOMO -0.516630998425545 >= system LUMO -1.39419983270686
+WARN: system HOMO -0.516630403667474 >= system LUMO -1.39419919897333
+WARN: system HOMO -0.516630464156919 >= system LUMO -1.39419927226212
+Step    0 : Gradient = 5.404e-01/5.404e-01 (rms/max) Energy = -126.8025081011
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 4.76883e-01
+WARN: system HOMO -0.437765768094779 >= system LUMO -1.2724973224949
+WARN: system HOMO -0.522959519373706 >= system LUMO -1.36879420979294
+WARN: system HOMO -0.521588221146081 >= system LUMO -1.35634307713029
+WARN: system HOMO -0.521905367343449 >= system LUMO -1.35777783036966
+WARN: system HOMO -0.521988847818184 >= system LUMO -1.35753368675492
+WARN: system HOMO -0.521989826175861 >= system LUMO -1.3575394738539
+WARN: system HOMO -0.521989395805589 >= system LUMO -1.35753765821946
+WARN: system HOMO -0.521989415745235 >= system LUMO -1.35753774271946
+WARN: system HOMO -0.521989431384806 >= system LUMO -1.35753772730926
+Step    1 : Displace = 1.000e-01/1.000e-01 (rms/max) Trust = 1.000e-01 (=) Grad = 2.924e-01/2.924e-01 (rms/max) E (change) = -126.9551264222 (-1.526e-01) Quality = 0.897
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 6.56096e-01
+WARN: system HOMO -0.455963595535521 >= system LUMO -1.28640493110063
+WARN: system HOMO -0.511362249515641 >= system LUMO -1.34473156273431
+WARN: system HOMO -0.511997987016995 >= system LUMO -1.33600518866956
+WARN: system HOMO -0.512647637587756 >= system LUMO -1.3370113795896
+WARN: system HOMO -0.51279527483641 >= system LUMO -1.33678337050618
+WARN: system HOMO -0.512806444865987 >= system LUMO -1.33678313769978
+WARN: system HOMO -0.512807311043611 >= system LUMO -1.33677948985015
+WARN: system HOMO -0.512807549352241 >= system LUMO -1.33677935879989
+WARN: system HOMO -0.512807573677207 >= system LUMO -1.33677933274615
+Step    2 : Displace = 1.179e-01/1.179e-01 (rms/max) Trust = 1.414e-01 (+) Grad = 1.405e-01/1.405e-01 (rms/max) E (change) = -127.0476780341 (-9.255e-02) Quality = 1.420
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 3.40970e-01
+WARN: system HOMO -0.466012780477555 >= system LUMO -1.30592635886825
+WARN: system HOMO -0.492271172397855 >= system LUMO -1.33298326228983
+WARN: system HOMO -0.493597102184476 >= system LUMO -1.32795959317181
+WARN: system HOMO -0.49421435366489 >= system LUMO -1.32846636881862
+WARN: system HOMO -0.494328370267151 >= system LUMO -1.32827921006129
+WARN: system HOMO -0.494330853209306 >= system LUMO -1.32827531348982
+WARN: system HOMO -0.494329342769901 >= system LUMO -1.32827244567833
+WARN: system HOMO -0.494329253075409 >= system LUMO -1.32827237863087
+Step    3 : Displace = 1.090e-01/1.090e-01 (rms/max) Trust = 2.000e-01 (+) Grad = 6.824e-02/6.824e-02 (rms/max) E (change) = -127.0891135811 (-4.144e-02) Quality = 1.432
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 1.75319e-01
+WARN: system HOMO -0.459645425143435 >= system LUMO -1.31633874009642
+WARN: system HOMO -0.470717361123129 >= system LUMO -1.32835907786851
+WARN: system HOMO -0.472067529914836 >= system LUMO -1.32526086083147
+WARN: system HOMO -0.472544400577148 >= system LUMO -1.32554516705239
+WARN: system HOMO -0.472620891664486 >= system LUMO -1.32539181714637
+WARN: system HOMO -0.472616712384339 >= system LUMO -1.32538559815416
+WARN: system HOMO -0.472614760003484 >= system LUMO -1.32538379621557
+WARN: system HOMO -0.472614612613606 >= system LUMO -1.32538374925144
+Step    4 : Displace = 1.030e-01/1.030e-01 (rms/max) Trust = 2.828e-01 (+) Grad = 3.119e-02/3.119e-02 (rms/max) E (change) = -127.1077557143 (-1.864e-02) Quality = 1.404
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 9.51711e-02
+WARN: system HOMO -0.449326091465393 >= system LUMO -1.32337979810066
+WARN: system HOMO -0.45167913285253 >= system LUMO -1.3270169717058
+WARN: system HOMO -0.452718106915117 >= system LUMO -1.32536399515917
+WARN: system HOMO -0.452995543417128 >= system LUMO -1.3255337122686
+WARN: system HOMO -0.453043304264173 >= system LUMO -1.32542524440823
+WARN: system HOMO -0.453039246199948 >= system LUMO -1.32541877743446
+WARN: system HOMO -0.453038132303628 >= system LUMO -1.32541796444755
+WARN: system HOMO -0.45303803425722 >= system LUMO -1.32541791421343
+Step    5 : Displace = 8.672e-02/8.672e-02 (rms/max) Trust = 3.000e-01 (+) Grad = 1.330e-02/1.330e-02 (rms/max) E (change) = -127.1147979524 (-7.042e-03) Quality = 1.377
+Hessian Eigenvalues: 4.99999e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.45924e-02
+WARN: system HOMO -0.438394551292309 >= system LUMO -1.32675835717077
+WARN: system HOMO -0.437520810450223 >= system LUMO -1.32722677843175
+WARN: system HOMO -0.438188959193727 >= system LUMO -1.32644901715463
+WARN: system HOMO -0.438327299003301 >= system LUMO -1.32654903821132
+WARN: system HOMO -0.438356473223398 >= system LUMO -1.32648564440369
+WARN: system HOMO -0.438355184961087 >= system LUMO -1.32648065882852
+WARN: system HOMO -0.438354631802257 >= system LUMO -1.32648022611716
+WARN: system HOMO -0.438354578611054 >= system LUMO -1.32648016356526
+WARN: system HOMO -0.438354575578205 >= system LUMO -1.32648016011368
+Step    6 : Displace = 6.446e-02/6.446e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 4.916e-03/4.916e-03 (rms/max) E (change) = -127.1169492034 (-2.151e-03) Quality = 1.328
+Hessian Eigenvalues: 3.44145e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+WARN: system HOMO -0.430594834758171 >= system LUMO -1.32797241740876
+WARN: system HOMO -0.429398124944447 >= system LUMO -1.3277028803325
+WARN: system HOMO -0.429744894650905 >= system LUMO -1.32740231468801
+WARN: system HOMO -0.42980311369119 >= system LUMO -1.32745360007191
+WARN: system HOMO -0.429817213881516 >= system LUMO -1.32742632664751
+WARN: system HOMO -0.429817588931656 >= system LUMO -1.3274235847495
+WARN: system HOMO -0.42981735598048 >= system LUMO -1.32742328809782
+WARN: system HOMO -0.429817334596184 >= system LUMO -1.32742326398189
+WARN: system HOMO -0.429817334890454 >= system LUMO -1.32742326513481
+WARN: system HOMO -0.429817335266121 >= system LUMO -1.3274232657765
+WARN: system HOMO -0.429817335553665 >= system LUMO -1.32742326619044
+WARN: system HOMO -0.429817335772718 >= system LUMO -1.32742326648243
+WARN: system HOMO -0.42981733594575 >= system LUMO -1.32742326670267
+WARN: system HOMO -0.429817336086979 >= system LUMO -1.32742326687674
+WARN: system HOMO -0.429817336203245 >= system LUMO -1.32742326701707
+WARN: system HOMO -0.42981733630307 >= system LUMO -1.3274232671352
+WARN: system HOMO -0.429817336389317 >= system LUMO -1.32742326723584
+WARN: system HOMO -0.429817334911181 >= system LUMO -1.32742326500287
+WARN: system HOMO -0.429817334315928 >= system LUMO -1.32742326457352
+WARN: system HOMO -0.429817334753921 >= system LUMO -1.32742326379763
+WARN: system HOMO -0.429817349544649 >= system LUMO -1.32742326565612
+WARN: system HOMO -0.42981740072712 >= system LUMO -1.32742324856622
+WARN: system HOMO -0.429817359086943 >= system LUMO -1.32742324696379
+Step    7 : Displace = 3.780e-02/3.780e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 1.375e-03/1.375e-03 (rms/max) E (change) = -127.1173880523 (-4.388e-04) Quality = 1.250
+Hessian Eigenvalues: 2.47896e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+WARN: system HOMO -0.426946583902695 >= system LUMO -1.32810708592394
+WARN: system HOMO -0.42637776368996 >= system LUMO -1.32792132686739
+WARN: system HOMO -0.426503871705253 >= system LUMO -1.32783426964529
+WARN: system HOMO -0.426522362739394 >= system LUMO -1.32785294321268
+WARN: system HOMO -0.426526979709374 >= system LUMO -1.32784470834778
+WARN: system HOMO -0.426527372604016 >= system LUMO -1.32784375954352
+WARN: system HOMO -0.426527307452949 >= system LUMO -1.32784362376177
+WARN: system HOMO -0.426527301033898 >= system LUMO -1.3278436171467
+Step    8 : Displace = 1.467e-02/1.467e-02 (rms/max) Trust = 3.000e-01 (=) Grad = 2.216e-04/2.216e-04 (rms/max) E (change) = -127.1174317930 (-4.374e-05) Quality = 1.147
+Hessian Eigenvalues: 2.07933e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00001e-02
+WARN: system HOMO -0.425984459663273 >= system LUMO -1.32798125599987
+WARN: system HOMO -0.425868872350671 >= system LUMO -1.32794047900196
+WARN: system HOMO -0.425892609134799 >= system LUMO -1.32792571674499
+WARN: system HOMO -0.425895906532159 >= system LUMO -1.32792921790008
+WARN: system HOMO -0.425896726511002 >= system LUMO -1.32792779482748
+WARN: system HOMO -0.425896816489484 >= system LUMO -1.32792762603525
+WARN: system HOMO -0.425896807470758 >= system LUMO -1.32792760192223
+WARN: system HOMO -0.425896807544629 >= system LUMO -1.32792760321051
+WARN: system HOMO -0.425896807805308 >= system LUMO -1.32792760406613
+WARN: system HOMO -0.425896807993896 >= system LUMO -1.32792760460559
+WARN: system HOMO -0.425896808124312 >= system LUMO -1.3279276049628
+WARN: system HOMO -0.425896808225656 >= system LUMO -1.32792760523023
+WARN: system HOMO -0.425896808301749 >= system LUMO -1.32792760543016
+WARN: system HOMO -0.425896808373246 >= system LUMO -1.32792760560871
+WARN: system HOMO -0.425896808417888 >= system LUMO -1.32792760572628
+WARN: system HOMO -0.425896808464397 >= system LUMO -1.32792760584167
+WARN: system HOMO -0.425896808493294 >= system LUMO -1.32792760591927
+WARN: system HOMO -0.425896806518117 >= system LUMO -1.3279276042741
+WARN: system HOMO -0.425896807447727 >= system LUMO -1.32792760496423
+WARN: system HOMO -0.425896807840231 >= system LUMO -1.32792760465571
+WARN: system HOMO -0.425896804559872 >= system LUMO -1.32792760302753
+WARN: system HOMO -0.425896812658376 >= system LUMO -1.32792763401021
+WARN: system HOMO -0.425896810887687 >= system LUMO -1.32792768998484
+WARN: system HOMO -0.425896797049411 >= system LUMO -1.32792775989895
+WARN: system HOMO -0.425896794941802 >= system LUMO -1.32792766885493
+Step    9 : Displace = 2.820e-03/2.820e-03 (rms/max) Trust = 3.000e-01 (=) Grad = 1.289e-05/1.289e-05 (rms/max) E (change) = -127.1174331010 (-1.308e-06) Quality = 1.107
+Hessian Eigenvalues: 1.95838e-02 4.99999e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.00000e-02
+WARN: system HOMO -0.4258633703696 >= system LUMO -1.32793619908627
+WARN: system HOMO -0.425856164979258 >= system LUMO -1.32793360337707
+WARN: system HOMO -0.425857630477957 >= system LUMO -1.32793270141133
+WARN: system HOMO -0.425857788136286 >= system LUMO -1.32793292400699
+Step   10 : Displace = 1.742e-04/1.742e-04 (rms/max) Trust = 3.000e-01 (=) Grad = 2.887e-07/2.887e-07 (rms/max) E (change) = -127.1174330998 (+1.180e-09) Quality = -0.277
+Converged! =D
+
+    #==========================================================================#
+    #| If this code has benefited your research, please support us by citing: |#
+    #|                                                                        |#
+    #| Wang, L.-P.; Song, C.C. (2016) "Geometry optimization made simple with |#
+    #| translation and rotation coordinates", J. Chem, Phys. 144, 214108.     |#
+    #| http://dx.doi.org/10.1063/1.4952956                                    |#
+    #==========================================================================#
+    
+Time elapsed since start of run_optimizer: 1589.008 seconds
+output file: /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/ne.h/ne.h.chrg2.mult4/ne.h.chrg2.mult4.geomopt/ne.h.chrg2.mult4.sep1.0-pyscf.apdft-ccsdt.ccpv5z/ne.h.chrg2.mult4-pyscf-ccsdt.ccpv5z.log
+Optimized bond length = 2.273108105283876 A
+============================================================================
+                               JOB STATISTICS                              
+============================================================================
+      SubmitTime: 2021-11-15T13:35:40
+         EndTime: 2021-11-18T13:36:14
+         RunTime: 00:26:58
+           JobId: 4675356
+            TRES: cpu=6,mem=24108M,node=1,billing=4
+       Partition: smp
+        NodeList: smp-n9
+         Command: /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/ne.h/ne.h.chrg2.mult4/ne.h.chrg2.mult4.geomopt/ne.h.chrg2.mult4.sep1.0-pyscf.apdft-ccsdt.ccpv5z/submit-pyscf-apdft.slurm
+          StdOut: /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/ne.h/ne.h.chrg2.mult4/ne.h.chrg2.mult4.geomopt/ne.h.chrg2.mult4.sep1.0-pyscf.apdft-ccsdt.ccpv5z/ne.h.chrg2.mult4.sep1.0-pyscf.apdft-ccsdt.ccpv5z.out
+More information:
+    - `sacct -M smp -j 4675356 -S 2021-11-15T13:35:40 -E 2021-11-18T13:36:14`
+   Print control:
+    - List of all possible fields: `sacct --helpformat`
+    - Add `--format=<field1,field2,etc>` with fields of interest
+============================================================================

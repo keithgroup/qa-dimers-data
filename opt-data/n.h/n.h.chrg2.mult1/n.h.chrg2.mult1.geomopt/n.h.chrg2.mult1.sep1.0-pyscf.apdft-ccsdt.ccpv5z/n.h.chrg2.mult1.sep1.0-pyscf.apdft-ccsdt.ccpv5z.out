@@ -1,0 +1,65 @@
+-=#  geomeTRIC started. Version: 0.9.7.2  #=-
+geometric-optimize called with the following command line:
+apdft-pyscf-calc.py
+6 internal coordinates being used (instead of 6 Cartesians)
+Internal coordinate system (atoms numbered from 1):
+Distance 1-2
+Translation-X 1-2
+Translation-Y 1-2
+Translation-Z 1-2
+Rotation-A 1-2
+Rotation-B 1-2
+Rotation-C 1-2
+<class 'geometric.internal.Distance'> : 1
+<class 'geometric.internal.TranslationX'> : 1
+<class 'geometric.internal.TranslationY'> : 1
+<class 'geometric.internal.TranslationZ'> : 1
+<class 'geometric.internal.RotationA'> : 1
+<class 'geometric.internal.RotationB'> : 1
+<class 'geometric.internal.RotationC'> : 1
+Step    0 : Gradient = 1.262e-01/1.262e-01 (rms/max) Energy = -53.6957746864
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 4.76883e-01
+Step    1 : Displace = 7.004e-02/7.004e-02 (rms/max) Trust = 1.000e-01 (=) Grad = 3.750e-02/3.750e-02 (rms/max) E (change) = -53.7156850628 (-1.991e-02) Quality = 1.192
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 3.35199e-01
+Step    2 : Displace = 2.960e-02/2.960e-02 (rms/max) Trust = 1.414e-01 (+) Grad = 1.873e-02/1.873e-02 (rms/max) E (change) = -53.7187597084 (-3.075e-03) Quality = 1.465
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 1.67792e-01
+Step    3 : Displace = 2.954e-02/2.954e-02 (rms/max) Trust = 2.000e-01 (+) Grad = 6.534e-03/6.534e-03 (rms/max) E (change) = -53.7201180217 (-1.358e-03) Quality = 1.299
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 1.09256e-01
+Step    4 : Displace = 1.582e-02/1.582e-02 (rms/max) Trust = 2.828e-01 (+) Grad = 2.077e-03/2.077e-03 (rms/max) E (change) = -53.7203692123 (-2.512e-04) Quality = 1.286
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 7.45247e-02
+Step    5 : Displace = 7.375e-03/7.375e-03 (rms/max) Trust = 3.000e-01 (+) Grad = 4.172e-04/4.172e-04 (rms/max) E (change) = -53.7204034018 (-3.419e-05) Quality = 1.181
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00000e-02 5.95564e-02
+Step    6 : Displace = 1.854e-03/1.854e-03 (rms/max) Trust = 3.000e-01 (=) Grad = 3.906e-05/3.906e-05 (rms/max) E (change) = -53.7204053412 (-1.939e-06) Quality = 1.327
+Hessian Eigenvalues: 5.00000e-02 5.00000e-02 5.00000e-02 ... 5.00000e-02 5.00002e-02 5.39799e-02
+Step    7 : Displace = 1.915e-04/1.915e-04 (rms/max) Trust = 3.000e-01 (=) Grad = 8.098e-07/8.098e-07 (rms/max) E (change) = -53.7204053509 (-9.706e-09) Quality = 0.687
+Converged! =D
+
+    #==========================================================================#
+    #| If this code has benefited your research, please support us by citing: |#
+    #|                                                                        |#
+    #| Wang, L.-P.; Song, C.C. (2016) "Geometry optimization made simple with |#
+    #| translation and rotation coordinates", J. Chem, Phys. 144, 214108.     |#
+    #| http://dx.doi.org/10.1063/1.4952956                                    |#
+    #==========================================================================#
+    
+Time elapsed since start of run_optimizer: 389.229 seconds
+output file: /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/n.h/n.h.chrg2.mult1/n.h.chrg2.mult1.geomopt/n.h.chrg2.mult1.sep1.0-pyscf.apdft-ccsdt.ccpv5z/n.h.chrg2.mult1-pyscf-ccsdt.ccpv5z.log
+Optimized bond length = 1.3088409699838353 A
+============================================================================
+                               JOB STATISTICS                              
+============================================================================
+      SubmitTime: 2021-11-15T13:35:37
+         EndTime: 2021-11-18T13:36:14
+         RunTime: 00:06:59
+           JobId: 4675345
+            TRES: cpu=6,mem=24108M,node=1,billing=4
+       Partition: smp
+        NodeList: smp-n185
+         Command: /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/n.h/n.h.chrg2.mult1/n.h.chrg2.mult1.geomopt/n.h.chrg2.mult1.sep1.0-pyscf.apdft-ccsdt.ccpv5z/submit-pyscf-apdft.slurm
+          StdOut: /ihome/jkeith/amm503/projects/apdft/dimer-geo-opt/n.h/n.h.chrg2.mult1/n.h.chrg2.mult1.geomopt/n.h.chrg2.mult1.sep1.0-pyscf.apdft-ccsdt.ccpv5z/n.h.chrg2.mult1.sep1.0-pyscf.apdft-ccsdt.ccpv5z.out
+More information:
+    - `sacct -M smp -j 4675345 -S 2021-11-15T13:35:37 -E 2021-11-18T13:36:14`
+   Print control:
+    - List of all possible fields: `sacct --helpformat`
+    - Add `--format=<field1,field2,etc>` with fields of interest
+============================================================================
