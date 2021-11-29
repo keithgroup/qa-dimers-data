@@ -126,6 +126,10 @@ Lowercase is always used to speed up navigation with a terminal.
     In these data, all coupled cluster triples corrections are perturbative.
     In the directory names, the `u` (for unrestricted) is typically dropped, but included in the file names.
 
+## Citation
+
+If you use this dataset, please cite the corresponding [manuscript](https://doi.org/10.26434/chemrxiv-2021-pt5gd) in addition to this repository as specified in `CITATION.cff`.
+
 ## License
 
 [![CC BY 4.0][cc-by-shield]][cc-by]
